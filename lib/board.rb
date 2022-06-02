@@ -91,4 +91,10 @@ class Board
        ABCDEFGH
     TEXT
   end
+
+  def square_in(location)
+    squares.find do
+      |square| [square.file, square.rank] == location
+    end
+  end
 end
