@@ -1,18 +1,18 @@
 class Square
   attr_reader :rank, :file, :color
-  attr_accessor :occupant, :highlighted
+  attr_accessor :occupant, :selected
 
-  def initialize(rank:, file:, color:, occupant: ' ', highlighted: false)
+  def initialize(rank:, file:, color:, occupant: ' ', selected: false)
     @rank = rank
     @file = file
     @occupant = occupant
     @color = color
-    @highlighted = highlighted
+    @selected = selected
   end
 
   def to_s
-    if highlighted == true
-      "\e[30;48;5;84m#{occupant.to_s}\e[0m"
+    if selected == true
+      "\e[30;48;5;81m#{occupant.to_s}\e[0m"
     else
       case color
       when 'light'
@@ -23,7 +23,7 @@ class Square
     end
   end
 
-  def highlight
-    self.highlighted = true
+  def select_as_start
+    self.selected = true
   end
 end
