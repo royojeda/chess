@@ -1,10 +1,15 @@
 class Player
-  def initialize(color:)
+  attr_reader :color
+  attr_accessor :error
+
+  def initialize(color:, error: nil)
     @color = color
+    @error = error
   end
 
   def select_square
     loop do
+      puts 'Please enter the location of the piece you want to move: '
       input = give_input
       return input.chars if valid_format?(input)
     end

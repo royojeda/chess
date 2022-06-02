@@ -92,9 +92,16 @@ class Board
     TEXT
   end
 
-  def square_in(location)
+  def square_at(location)
     squares.find do
       |square| [square.file, square.rank] == location
+    end
+  end
+
+  def check_start(player, location)
+    selected_square = square_at(location)
+    if selected_square.valid_start_for?(player)
+      selected_square.selected
     end
   end
 end
