@@ -102,6 +102,14 @@ class Board
     selected_square = square_at(location)
     if selected_square.valid_start_for?(player)
       selected_square.selected
+      possible_moves = selected_square.possible_fin
+      squares_at(possible_moves)
+    end
+  end
+
+  def squares_at(locations)
+    locations.map do |location|
+      square_at(location).possible_move
     end
   end
 end

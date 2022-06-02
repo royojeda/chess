@@ -45,4 +45,10 @@ class Square
       true
     end
   end
+
+  def possible_fin
+    occupant.moves.map do |move|
+      [(file.ord + move[0]).chr, (rank.ord + move[1]).chr]
+    end
+  end
 end
