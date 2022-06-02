@@ -26,7 +26,7 @@ class Board
       file = 'a'
       while file <= 'h'
         color = colors[0]
-        arr.push(Square.new(rank:, file:, color:))
+        arr.push(Square.new(rank: rank.to_s, file:, color:))
         colors.rotate!
         file = file.next
       end
@@ -39,7 +39,7 @@ class Board
   def insert_starting_pieces(squares)
     squares.each do |square|
       case square.rank
-      when 1
+      when '1'
         color = 'white'
         case square.file
         when 'a', 'h'
@@ -53,13 +53,13 @@ class Board
         when 'e'
           square.occupant = King.new(color:)
         end
-      when 2
+      when '2'
         color = 'white'
         square.occupant = Pawn.new(color:)
-      when 7
+      when '7'
         color = 'black'
         square.occupant = Pawn.new(color:)
-      when 8
+      when '8'
         color = 'black'
         case square.file
         when 'a', 'h'
