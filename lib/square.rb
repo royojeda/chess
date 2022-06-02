@@ -22,4 +22,8 @@ class Square
       end
     end
   end
+
+  def highlight
+    self.highlighted = true
+  end
 end
