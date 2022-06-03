@@ -98,13 +98,17 @@ class Board
     end
   end
 
-  def check_start(player, location)
+  def valid_start?(player, location)
     selected_square = square_at(location)
-    if selected_square.valid_start_for?(player)
-      selected_square.selected
-      possible_moves = selected_square.possible_fin
-      squares_at(possible_moves)
-    end
+    selected_square.check_for_errors_by(player)
+    player.error == ''
+  end
+
+  def select_start(location)
+    selected_square = square_at(location)
+    selected_square.selected
+    possible_moves = selected_square.possible_fin
+    squares_at(possible_moves)
   end
 
   def squares_at(locations)

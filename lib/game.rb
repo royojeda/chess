@@ -19,9 +19,13 @@ class Game
   end
 
   def turn
-    display
-    start = current_player.select_square
-    board.check_start(current_player, start)
-    display
+    loop do
+      display
+      start = current_player.select_square
+      next unless board.valid_start?(current_player, start)
+
+      board.select_start(start)
+      # fin = current_player.select_square
+    end
   end
 end

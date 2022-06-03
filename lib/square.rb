@@ -34,16 +34,14 @@ class Square
     self.status = 'possible_move'
   end
 
-  def valid_start_for?(player)
-    if occupant == ' '
-      player.error = 'That location does not contain one of your pieces.'
-      false
-    elsif occupant.color != player.color
-      player.error = 'That piece does not belong to you.'
-      false
-    else
-      true
-    end
+  def check_for_errors_by(player)
+    player.error = if occupant == ' '
+                     'That location does not contain one of your pieces.'
+                   elsif occupant.color != player.color
+                     'That piece does not belong to you.'
+                   else
+                     ''
+                   end
   end
 
   def possible_fin
