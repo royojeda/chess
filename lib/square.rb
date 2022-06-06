@@ -50,18 +50,18 @@ class Square
   end
 
   def background_blue
-    '81'
+    81
   end
 
   def background_green
-    '84'
+    84
   end
 
   def background_light
-    '223'
+    223
   end
 
   def background_dark
-    '3'
+    3
   end
 end
