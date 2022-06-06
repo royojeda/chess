@@ -11,10 +11,18 @@ class Square
 
   def determine_color
     if file_and_rank_odd? || file_and_rank_even?
-      'dark'
+      color_dark
     else
-      'light'
+      color_light
     end
+  end
+
+  def color_dark
+    'dark'
+  end
+
+  def color_light
+    'light'
   end
 
   def file_and_rank_odd?
