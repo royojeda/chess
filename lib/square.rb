@@ -16,6 +16,14 @@ class Square
     @occupant = determine_occupant
   end
 
+  def empty?
+    occupant == ' '
+  end
+
+  def owned_by?(player)
+    occupant.color == player.color
+  end
+
   # rubocop:disable Metrics/MethodLength
   def determine_occupant
     case rank

@@ -29,9 +29,20 @@ class Board
     ('a'..'h').to_a
   end
 
-  # def square_at(rank, file)
-  #   squares.find { |square| square.rank == rank && square.file == file }
-  # end
+  def empty_at?(move)
+    square_at(move).empty?
+  end
+
+  def piece_owned?(player, move)
+    square_at(move).owned_by?(player)
+  end
+
+  def square_at(move)
+    location = move.chars
+    file = location[0]
+    rank = location[1]
+    squares.find { |square| square.rank == rank && square.file == file }
+  end
 
   def display
     squares.each do |square|
