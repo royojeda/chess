@@ -12,7 +12,7 @@ class Game
   end
 
   def current_player
-    players[0]
+    players.first
   end
 
   def display
