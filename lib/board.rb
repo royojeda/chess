@@ -34,9 +34,9 @@ class Board
   end
 
   def display
-    each_location do |rank, file|
-      print square_at(rank, file).occupant
-      puts if file == 'h'
+    squares.each do |square|
+      print square.occupant
+      puts if square.file == 'h'
     end
   end
 end
