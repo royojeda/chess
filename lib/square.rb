@@ -11,11 +11,12 @@ class Square
   def initialize(file:, rank:, status: '')
     @file = file
     @rank = rank
-    @occupant = determine_occupant
     @status = status
     @color = determine_color
+    @occupant = determine_occupant
   end
 
+  # rubocop:disable Metrics/MethodLength
   def determine_occupant
     case rank
     when '1'
@@ -31,10 +32,6 @@ class Square
     end
   end
 
-  def create_pawn(color)
-    Pawn.new(color:)
-  end
-
   def create_non_pawn(color)
     case file
     when 'a', 'h'
@@ -48,6 +45,11 @@ class Square
     when 'e'
       King
     end.new(color:)
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def create_pawn(color)
+    Pawn.new(color:)
   end
 
   def determine_color

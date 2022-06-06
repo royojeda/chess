@@ -35,12 +35,10 @@ class Board
 
   def display
     squares.each do |square|
+      print square.rank if square.file == 'a'
       print square
       puts if square.file == 'h'
     end
+    puts ' ABCDEFGH'
   end
 end
-
-system 'clear'
-a = Board.new
-a.display
