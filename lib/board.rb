@@ -29,17 +29,18 @@ class Board
     ('a'..'h').to_a
   end
 
-  def square_at(rank, file)
-    squares.find { |square| square.rank == rank && square.file == file }
-  end
+  # def square_at(rank, file)
+  #   squares.find { |square| square.rank == rank && square.file == file }
+  # end
 
   def display
     squares.each do |square|
-      print square.occupant
+      print square
       puts if square.file == 'h'
     end
   end
 end
 
+system 'clear'
 a = Board.new
 a.display
