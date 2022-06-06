@@ -1,12 +1,53 @@
+require './lib/Pieces/pawn'
+require './lib/Pieces/rook'
+require './lib/Pieces/knight'
+require './lib/Pieces/bishop'
+require './lib/Pieces/queen'
+require './lib/Pieces/king'
+
 class Square
   attr_reader :rank, :file, :occupant, :status, :color
 
-  def initialize(file:, rank:, occupant: ' ', status: '')
+  def initialize(file:, rank:, status: '')
     @file = file
     @rank = rank
-    @occupant = occupant
+    @occupant = determine_occupant
     @status = status
     @color = determine_color
+  end
+
+  def determine_occupant
+    case rank
+    when '1'
+      create_non_pawn('white')
+    when '2'
+      create_pawn('white')
+    when '7'
+      create_pawn('black')
+    when '8'
+      create_non_pawn('black')
+    else
+      ' '
+    end
+  end
+
+  def create_pawn(color)
+    Pawn.new(color:)
+  end
+
+  def create_non_pawn(color)
+    case file
+    when 'a', 'h'
+      Rook
+    when 'b', 'g'
+      Knight
+    when 'c', 'f'
+      Bishop
+    when 'd'
+      Queen
+    when 'e'
+      King
+    end.new(color:)
   end
 
   def determine_color
