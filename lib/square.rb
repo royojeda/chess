@@ -26,7 +26,7 @@ class Square
   end
 
   def possible_moves
-
+    [['e', '3'], ['e', '4']]
   end
 
   def empty?

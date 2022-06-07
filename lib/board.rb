@@ -32,9 +32,9 @@ class Board
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue
-    # moves = start.possible_moves
-    # fins = squa
-    # fins.each(&:highlight_green)
+    moves = start.possible_moves
+    fins = squares_at(moves)
+    fins.each(&:highlight_green)
   end
 
   def empty_at?(location)
@@ -43,6 +43,14 @@ class Board
 
   def piece_owned?(player, location)
     square_at(location).owned_by?(player)
+  end
+
+  def squares_at(locations)
+    arr = []
+    locations.each do |location|
+      arr << square_at(location)
+    end
+    arr
   end
 
   def square_at(location)
