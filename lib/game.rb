@@ -18,6 +18,11 @@ class Game
 
   def turn
     select_start
+    highlight_piece
+  end
+
+  def highlight_piece
+    board.highlight_piece_at(start)
   end
 
   def select_start

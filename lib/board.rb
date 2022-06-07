@@ -29,6 +29,10 @@ class Board
     ('a'..'h').to_a
   end
 
+  def highlight_piece_at(move)
+    square_at(move).select_as_start
+  end
+
   def empty_at?(move)
     square_at(move).empty?
   end
