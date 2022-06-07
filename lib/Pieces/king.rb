@@ -5,6 +5,10 @@ class King
     @color = color
   end
 
+  def moves
+    [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
+  end
+
   def to_s
     case color
     when 'white'
@@ -19,6 +23,6 @@ class King
   end
 
   def color_black
-    "\u265E"
+    "\u265A"
   end
 end

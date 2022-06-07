@@ -33,7 +33,7 @@ class Board
     start = square_at(location)
     start.highlight_blue
     fins = start.all_fins
-    valid_fins = squares_at(fins)
+    valid_fins = squares_at(fins).compact
     valid_fins.each(&:highlight_green)
   end
 
