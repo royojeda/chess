@@ -32,9 +32,9 @@ class Board
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue
-    moves = start.possible_moves
-    fins = squares_at(moves)
-    fins.each(&:highlight_green)
+    fins = start.all_fins
+    valid_fins = squares_at(fins)
+    valid_fins.each(&:highlight_green)
   end
 
   def empty_at?(location)

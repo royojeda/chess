@@ -25,8 +25,28 @@ class Square
     self.status = 'green'
   end
 
-  def possible_moves
-    [['e', '3'], ['e', '4']]
+  def all_fins
+    arr = []
+    moves.each do |move|
+      arr << fin_from(move)
+    end
+    arr
+  end
+
+  def fin_from(move)
+    [fin_file(move[0]), fin_rank(move[1])]
+  end
+
+  def fin_file(horizontal_move)
+    (file.ord + horizontal_move).chr
+  end
+
+  def fin_rank(vertical_move)
+    (rank.ord + vertical_move).chr
+  end
+
+  def moves
+    occupant.moves
   end
 
   def empty?
