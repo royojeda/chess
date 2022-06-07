@@ -25,10 +25,24 @@ class Square
     self.status = 'green'
   end
 
-  def all_fins
+  def own_piece?(color)
+    !empty? && occupant.color == color
+  end
+
+  def enemy_piece?(color)
+    !empty? && occupant.color != color
+  end
+
+  def all_fins(board)
     arr = []
-    moves.each do |move|
-      arr << fin_from(move)
+    moves.each do |direction|
+      direction.each do |move|
+        break if board.square_at(fin_from(move)).nil? ||
+                 board.square_at(fin_from(move)).own_piece?(occupant.color)
+
+        arr << fin_from(move)
+        break if board.square_at(fin_from(move)).enemy_piece?(occupant.color)
+      end
     end
     arr
   end

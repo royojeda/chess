@@ -8,12 +8,17 @@ class Pawn
   end
 
   def moves
-    case color
-    when 'white'
-      first_move ? [[0, 1], [0, 2]] : [[0, 1]]
-    when 'black'
-      first_move ? [[0, -1], [0, -2]] : [[0, -1]]
+    sign = move_direction
+    arr = [[0, "#{sign}1".to_i]]
+    if first_move
+      self.first_move = false
+      arr << [0, "#{sign}2".to_i]
     end
+    [arr]
+  end
+
+  def move_direction
+    color == 'white' ? '+' : '-'
   end
 
   def to_s

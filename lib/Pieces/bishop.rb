@@ -6,12 +6,17 @@ class Bishop
   end
 
   def moves
-    arr = []
-    (-7..7).each do |i|
-      arr << [i, i]
-      arr << [-i, i]
+    up_right_moves = []
+    up_left_moves = []
+    down_right_moves = []
+    down_left_moves = []
+    (1..7).each do |i|
+      up_right_moves << [i, i]
+      up_left_moves << [-i, i]
+      down_right_moves << [i, -i]
+      down_left_moves << [-i, -i]
     end
-    arr
+    [up_right_moves, up_left_moves, down_right_moves, down_left_moves]
   end
 
   def to_s

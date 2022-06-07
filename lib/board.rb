@@ -32,7 +32,7 @@ class Board
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue
-    fins = start.all_fins
+    fins = start.all_fins(self)
     valid_fins = squares_at(fins).compact
     valid_fins.each(&:highlight_green)
   end
