@@ -1,18 +1,12 @@
 class Player
   attr_reader :color
-  attr_accessor :error, :move
+  attr_accessor :error
 
-  def initialize(color:, error: nil, move: nil)
+  def initialize(color:)
     @color = color
-    @error = error
-    @move = move
   end
 
-  def make_move
-    self.move = prompt
-  end
-
-  def prompt
+  def select_piece
     puts "#{color.capitalize}, please select a piece:"
     gets.chomp
   end

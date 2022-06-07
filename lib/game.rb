@@ -3,44 +3,46 @@ require './lib/player'
 
 class Game
   attr_reader :board, :players
-  attr_accessor :error
+  attr_accessor :error, :start
 
   def initialize(board: Board.new,
                  error: nil,
+                 start: nil,
                  player_one: Player.new(color: 'white'),
                  player_two: Player.new(color: 'black'))
     @board = board
     @error = error
+    @start = start
     @players = [player_one, player_two]
   end
 
   def turn
-    make_valid_move
+    select_start
   end
 
-  def make_valid_move
+  def select_start
     loop do
       display
-      current_player.make_move
+      self.start = select_piece
       check_errors
-      break if valid_move?
+      break if valid_start?
     end
   end
 
-  def valid_move?
+  def valid_start?
     error.nil?
   end
 
-  def move
-    current_player.move
+  def select_piece
+    current_player.select_piece
   end
 
   def check_errors
-    self.error = if !valid_format?(move)
+    self.error = if !valid_format?(start)
                    invalid_format_error
-                 elsif board.empty_at?(move)
+                 elsif board.empty_at?(start)
                    empty_square_error
-                 elsif !board.piece_owned?(current_player, move)
+                 elsif !board.piece_owned?(current_player, start)
                    unowned_piece_error
                  end
   end
