@@ -18,11 +18,12 @@ class Game
 
   def turn
     select_start
-    highlight_piece
+    show_moves
+    display
   end
 
-  def highlight_piece
-    board.highlight_piece_at(start)
+  def show_moves
+    board.show_moves_from(start)
   end
 
   def select_start
@@ -53,7 +54,9 @@ class Game
   end
 
   def valid_format?(input)
-    input.match?(/^[a-h][1-8]$/)
+    input.length == 2 &&
+      input[0].match?(/^[a-h]$/) &&
+      input[1].match?(/^[1-8]$/)
   end
 
   def invalid_format_error

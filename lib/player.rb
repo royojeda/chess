@@ -8,6 +8,6 @@ class Player
 
   def select_piece
     puts "#{color.capitalize}, please select a piece:"
-    gets.chomp
+    gets.chomp.chars
   end
 end

@@ -29,20 +29,23 @@ class Board
     ('a'..'h').to_a
   end
 
-  def highlight_piece_at(move)
-    square_at(move).select_as_start
+  def show_moves_from(location)
+    start = square_at(location)
+    start.highlight_blue
+    # moves = start.possible_moves
+    # fins = squa
+    # fins.each(&:highlight_green)
   end
 
-  def empty_at?(move)
-    square_at(move).empty?
+  def empty_at?(location)
+    square_at(location).empty?
   end
 
-  def piece_owned?(player, move)
-    square_at(move).owned_by?(player)
+  def piece_owned?(player, location)
+    square_at(location).owned_by?(player)
   end
 
-  def square_at(move)
-    location = move.chars
+  def square_at(location)
     file = location[0]
     rank = location[1]
     squares.find { |square| square.rank == rank && square.file == file }

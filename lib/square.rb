@@ -17,8 +17,16 @@ class Square
     @occupant = determine_occupant
   end
 
-  def select_as_start
+  def highlight_blue
     self.status = 'blue'
+  end
+
+  def highlight_green
+    self.status = 'green'
+  end
+
+  def possible_moves
+
   end
 
   def empty?
