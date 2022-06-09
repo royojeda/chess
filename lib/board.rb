@@ -1,10 +1,11 @@
 require './lib/square'
 
 class Board
-  attr_accessor :squares
+  attr_accessor :squares, :valid_moves
 
   def initialize(squares: starting_condition)
     @squares = squares
+    @valid_moves = nil
   end
 
   def starting_condition
@@ -33,8 +34,14 @@ class Board
     start = square_at(location)
     start.highlight_blue
     fins = start.all_fins(self)
-    valid_fins = squares_at(fins).compact
-    valid_fins.each(&:highlight_green)
+    self.valid_moves = squares_at(fins).compact
+    valid_moves.each(&:highlight_green)
+  end
+
+  def valid_move?(location)
+    valid_moves.any? do |move|
+      move.file == location[0] && move.rank == location[1]
+    end
   end
 
   def empty_at?(location)

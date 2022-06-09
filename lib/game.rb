@@ -3,16 +3,18 @@ require './lib/player'
 
 class Game
   attr_reader :board, :players
-  attr_accessor :error, :start
+  attr_accessor :error, :start, :move
 
   def initialize(board: Board.new,
                  error: nil,
                  start: nil,
+                 move: nil,
                  player_one: Player.new(color: 'white'),
                  player_two: Player.new(color: 'black'))
     @board = board
     @error = error
     @start = start
+    @move = move
     @players = [player_one, player_two]
   end
 
@@ -21,13 +23,31 @@ class Game
   end
 
   def over?
+    # temporary
     false
   end
 
   def turn
     select_start
     show_moves_from_start
+    select_move
     switch_players
+  end
+
+  def select_move
+    loop do
+      display
+      choose_destination
+      break if valid_move?
+    end
+  end
+
+  def choose_destination
+    self.move = current_player.choose_destination
+  end
+
+  def valid_move?
+    board.valid_move?(move)
   end
 
   def show_moves_from_start
