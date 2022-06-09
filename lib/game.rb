@@ -67,7 +67,7 @@ class Game
     loop do
       display
       select_piece
-      check_errors
+      check_start_errors
       break if valid_start?
     end
   end
@@ -80,7 +80,7 @@ class Game
     self.start = current_player.select_piece
   end
 
-  def check_errors
+  def check_start_errors
     self.error = if !valid_format?(start)
                    invalid_format_error
                  elsif board.empty_at?(start)
