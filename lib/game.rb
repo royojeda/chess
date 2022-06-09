@@ -26,11 +26,11 @@ class Game
 
   def turn
     select_start
-    show_moves
+    show_moves_from_start
     switch_players
   end
 
-  def show_moves
+  def show_moves_from_start
     board.show_moves_from(start)
   end
 
