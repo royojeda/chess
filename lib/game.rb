@@ -5,17 +5,12 @@ class Game
   attr_reader :board, :players
   attr_accessor :error, :start, :move
 
-  def initialize(board: Board.new,
-                 error: nil,
-                 start: nil,
-                 move: nil,
-                 player_one: Player.new(color: 'white'),
-                 player_two: Player.new(color: 'black'))
-    @board = board
-    @error = error
-    @start = start
-    @move = move
-    @players = [player_one, player_two]
+  def initialize
+    @board = Board.new
+    @error = nil
+    @start = nil
+    @move = nil
+    @players = [Player.new(color: 'white'), Player.new(color: 'black')]
   end
 
   def play
@@ -35,44 +30,45 @@ class Game
     switch_players
   end
 
-  def execute_move
-    board.move(start, move)
-  end
-
-  def select_move
+  def select_start
     loop do
       display
-      choose_destination
-      if valid_move?
-        self.error = ''
-        break
-      end
-      self.error = 'Invalid move.'
+      select_piece
+      check_start_errors
+      break if valid_input?
     end
-  end
-
-  def choose_destination
-    self.move = current_player.choose_destination
-  end
-
-  def valid_move?
-    board.valid_move?(move)
   end
 
   def show_moves_from_start
     board.show_moves_from(start)
   end
 
-  def select_start
+  def select_move
     loop do
       display
-      select_piece
-      check_start_errors
-      break if valid_start?
+      choose_destination
+      check_move_errors
+      break if valid_input?
     end
   end
 
-  def valid_start?
+  def execute_move
+    board.move(start, move)
+  end
+
+  def check_move_errors
+    self.error = if !valid_format?(move)
+                   invalid_format_error
+                 elsif !board.valid_move?(move)
+                   invalid_move_error
+                 end
+  end
+
+  def choose_destination
+    self.move = current_player.choose_destination
+  end
+
+  def valid_input?
     error.nil?
   end
 
@@ -94,6 +90,10 @@ class Game
     input.length == 2 &&
       input[0].match?(/^[a-h]$/) &&
       input[1].match?(/^[1-8]$/)
+  end
+
+  def invalid_move_error
+    'Invalid move.'
   end
 
   def invalid_format_error
