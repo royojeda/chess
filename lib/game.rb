@@ -38,7 +38,7 @@ class Game
   def select_start
     loop do
       display
-      self.start = select_piece
+      select_piece
       check_errors
       break if valid_start?
     end
@@ -49,7 +49,7 @@ class Game
   end
 
   def select_piece
-    current_player.select_piece
+    self.start = current_player.select_piece
   end
 
   def check_errors
