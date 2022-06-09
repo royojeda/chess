@@ -16,10 +16,19 @@ class Game
     @players = [player_one, player_two]
   end
 
+  def play
+    turn until over?
+  end
+
+  def over?
+    false
+  end
+
   def turn
     select_start
     show_moves
     display
+    switch_players
   end
 
   def show_moves
@@ -69,6 +78,10 @@ class Game
 
   def unowned_piece_error
     'That piece is not yours.'
+  end
+
+  def switch_players
+    players.rotate!
   end
 
   def current_player
