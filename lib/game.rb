@@ -27,7 +27,6 @@ class Game
   def turn
     select_start
     show_moves
-    display
     switch_players
   end
 
