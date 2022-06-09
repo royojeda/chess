@@ -31,14 +31,23 @@ class Game
     select_start
     show_moves_from_start
     select_move
+    execute_move
     switch_players
+  end
+
+  def execute_move
+    board.move(start, move)
   end
 
   def select_move
     loop do
       display
       choose_destination
-      break if valid_move?
+      if valid_move?
+        self.error = ''
+        break
+      end
+      self.error = 'Invalid move.'
     end
   end
 

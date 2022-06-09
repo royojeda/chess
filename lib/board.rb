@@ -30,6 +30,14 @@ class Board
     ('a'..'h').to_a
   end
 
+  def move(start, move)
+    source = square_at(start)
+    destination = square_at(move)
+    destination.update_occupant(source)
+    source.remove_occupant
+    squares.each(&:highlight_none)
+  end
+
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue

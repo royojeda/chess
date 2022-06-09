@@ -6,8 +6,8 @@ require './lib/Pieces/queen'
 require './lib/Pieces/king'
 
 class Square
-  attr_reader :rank, :file, :occupant, :color
-  attr_accessor :status
+  attr_reader :rank, :file, :color
+  attr_accessor :status, :occupant
 
   def initialize(file:, rank:, status: '')
     @file = file
@@ -15,6 +15,18 @@ class Square
     @status = status
     @color = determine_color
     @occupant = determine_occupant
+  end
+
+  def highlight_none
+    self.status = ''
+  end
+
+  def remove_occupant
+    self.occupant = ' '
+  end
+
+  def update_occupant(source)
+    self.occupant = source.occupant
   end
 
   def highlight_blue
