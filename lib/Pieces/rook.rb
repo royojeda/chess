@@ -1,8 +1,8 @@
-class Rook
-  attr_reader :color
+require './lib/Pieces/piece'
 
-  def initialize(color:)
-    @color = color
+class Rook < Piece
+  def post_initialize
+    @first_move = true
   end
 
   def moves

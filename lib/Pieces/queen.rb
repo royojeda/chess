@@ -1,10 +1,6 @@
-class Queen
-  attr_reader :color
+require './lib/Pieces/piece'
 
-  def initialize(color:)
-    @color = color
-  end
-
+class Queen < Piece
   def moves
     upward_moves = []
     downward_moves = []

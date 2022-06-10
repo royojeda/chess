@@ -46,17 +46,18 @@ class Square
   end
 
   def all_fins(board)
-    arr = []
-    moves.each do |direction|
-      direction.each do |move|
-        break if board.square_at(fin_from(move)).nil? ||
-                 board.square_at(fin_from(move)).own_piece?(occupant.color)
+    # arr = []
+    # moves.each do |direction|
+    #   direction.each do |move|
+    #     break if board.square_at(fin_from(move)).nil? ||
+    #              board.square_at(fin_from(move)).own_piece?(occupant.color)
 
-        arr << fin_from(move)
-        break if board.square_at(fin_from(move)).enemy_piece?(occupant.color)
-      end
-    end
-    arr
+    #     arr << fin_from(move)
+    #     break if board.square_at(fin_from(move)).enemy_piece?(occupant.color)
+    #   end
+    # end
+    # arr
+    occupant.all_fins(board, self)
   end
 
   def fin_from(move)

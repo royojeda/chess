@@ -1,10 +1,6 @@
-class Bishop
-  attr_reader :color
+require './lib/Pieces/piece'
 
-  def initialize(color:)
-    @color = color
-  end
-
+class Bishop < Piece
   def moves
     up_right_moves = []
     up_left_moves = []

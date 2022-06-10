@@ -1,8 +1,10 @@
-class King
-  attr_reader :color
+require './lib/Pieces/piece'
 
-  def initialize(color:)
-    @color = color
+class King < Piece
+  attr_accessor :first_move
+
+  def post_initialize
+    @first_move = true
   end
 
   def moves

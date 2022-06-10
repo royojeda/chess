@@ -1,10 +1,6 @@
-class Knight
-  attr_reader :color
+require './lib/Pieces/piece'
 
-  def initialize(color:)
-    @color = color
-  end
-
+class Knight < Piece
   def moves
     [[[1, 2]], [[2, 1]], [[2, -1]], [[1, -2]], [[-1, -2]], [[-2, -1]], [[-2, 1]], [[-1, 2]]]
   end
