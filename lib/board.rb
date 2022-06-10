@@ -30,6 +30,10 @@ class Board
     ('a'..'h').to_a
   end
 
+  def out_of_bounds?(location)
+    square_at(location).nil?
+  end
+
   def move(start, move)
     source = square_at(start)
     destination = square_at(move)

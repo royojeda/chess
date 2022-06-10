@@ -13,7 +13,7 @@ class Piece
     arr = []
     moves.each do |direction|
       direction.each do |move|
-        break if board.square_at(square.fin_from(move)).nil? ||
+        break if board.out_of_bounds?(square.fin_from(move)) ||
                  board.square_at(square.fin_from(move)).own_piece?(color)
 
         arr << square.fin_from(move)
