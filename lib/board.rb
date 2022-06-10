@@ -1,119 +1,93 @@
 require './lib/square'
-require './lib/pawn'
-require './lib/rook'
-require './lib/knight'
-require './lib/bishop'
-require './lib/queen'
-require './lib/king'
 
 class Board
-  attr_reader :squares
+  attr_accessor :squares, :valid_moves
 
-  def initialize
-    @squares = starting_arrangement
+  def initialize(squares: starting_condition)
+    @squares = squares
+    @valid_moves = nil
   end
 
-  def starting_arrangement
-    empty_squares = make_empty_squares
-    insert_starting_pieces(empty_squares)
-  end
-
-  def make_empty_squares
+  def starting_condition
     arr = []
-    colors = ['dark', 'light']
-    rank = 1
-    while rank <= 8
-      file = 'a'
-      while file <= 'h'
-        color = colors[0]
-        arr.push(Square.new(rank: rank.to_s, file:, color:))
-        colors.rotate!
-        file = file.next
+    each_location { |rank, file| arr << Square.new(rank:, file:) }
+    arr
+  end
+
+  def each_location(&proc)
+    ranks.each do |rank|
+      files.each do |file|
+        proc.call(rank, file)
       end
-      colors.rotate!
-      rank += 1
+    end
+  end
+
+  def ranks
+    ('1'..'8').to_a.reverse
+  end
+
+  def files
+    ('a'..'h').to_a
+  end
+
+  def out_of_bounds?(location)
+    square_at(location).nil?
+  end
+
+  def move(start, move)
+    source = square_at(start)
+    destination = square_at(move)
+    destination.update_occupant(source)
+    source.remove_occupant
+    squares.each(&:highlight_none)
+  end
+
+  def show_moves_from(location)
+    start = square_at(location)
+    start.highlight_blue
+    fins = start.all_fins(self)
+    self.valid_moves = squares_at(fins).compact
+    valid_moves.each(&:highlight_green)
+  end
+
+  def valid_move?(location)
+    valid_moves.any? do |move|
+      move.file == location[0] && move.rank == location[1]
+    end
+  end
+
+  def empty_at?(location)
+    square_at(location).empty?
+  end
+
+  def own_piece_at?(color, location)
+    square_at(location).own_piece?(color)
+  end
+
+  def enemy_piece_at?(color, location)
+    square_at(location).enemy_piece?(color)
+  end
+
+  def squares_at(locations)
+    arr = []
+    locations.each do |location|
+      arr << square_at(location)
     end
     arr
   end
 
-  def insert_starting_pieces(squares)
-    squares.each do |square|
-      case square.rank
-      when '1'
-        color = 'white'
-        case square.file
-        when 'a', 'h'
-          square.occupant = Rook.new(color:)
-        when 'b', 'g'
-          square.occupant = Knight.new(color:)
-        when 'c', 'f'
-          square.occupant = Bishop.new(color:)
-        when 'd'
-          square.occupant = Queen.new(color:)
-        when 'e'
-          square.occupant = King.new(color:)
-        end
-      when '2'
-        color = 'white'
-        square.occupant = Pawn.new(color:)
-      when '7'
-        color = 'black'
-        square.occupant = Pawn.new(color:)
-      when '8'
-        color = 'black'
-        case square.file
-        when 'a', 'h'
-          square.occupant = Rook.new(color:)
-        when 'b', 'g'
-          square.occupant = Knight.new(color:)
-        when 'c', 'f'
-          square.occupant = Bishop.new(color:)
-        when 'd'
-          square.occupant = Queen.new(color:)
-        when 'e'
-          square.occupant = King.new(color:)
-        end
-      end
-    end
-  end
-
-  def to_s
-    <<~TEXT
-       ABCDEFGH
-      8#{squares[56]}#{squares[57]}#{squares[58]}#{squares[59]}#{squares[60]}#{squares[61]}#{squares[62]}#{squares[63]}8
-      7#{squares[48]}#{squares[49]}#{squares[50]}#{squares[51]}#{squares[52]}#{squares[53]}#{squares[54]}#{squares[55]}7
-      6#{squares[40]}#{squares[41]}#{squares[42]}#{squares[43]}#{squares[44]}#{squares[45]}#{squares[46]}#{squares[47]}6
-      5#{squares[32]}#{squares[33]}#{squares[34]}#{squares[35]}#{squares[36]}#{squares[37]}#{squares[38]}#{squares[39]}5
-      4#{squares[24]}#{squares[25]}#{squares[26]}#{squares[27]}#{squares[28]}#{squares[29]}#{squares[30]}#{squares[31]}4
-      3#{squares[16]}#{squares[17]}#{squares[18]}#{squares[19]}#{squares[20]}#{squares[21]}#{squares[22]}#{squares[23]}3
-      2#{squares[8]}#{squares[9]}#{squares[10]}#{squares[11]}#{squares[12]}#{squares[13]}#{squares[14]}#{squares[15]}2
-      1#{squares[0]}#{squares[1]}#{squares[2]}#{squares[3]}#{squares[4]}#{squares[5]}#{squares[6]}#{squares[7]}1
-       ABCDEFGH
-    TEXT
-  end
-
   def square_at(location)
-    squares.find do
-      |square| [square.file, square.rank] == location
+    file = location[0]
+    rank = location[1]
+    squares.find { |square| square.rank == rank && square.file == file }
+  end
+
+  def display
+    squares.each do |square|
+      print square.rank if square.file == 'a'
+      print square
+      puts if square.file == 'h'
     end
-  end
-
-  def valid_start?(player, location)
-    selected_square = square_at(location)
-    selected_square.check_for_errors_by(player)
-    player.error == ''
-  end
-
-  def select_start(location)
-    selected_square = square_at(location)
-    selected_square.selected
-    possible_moves = selected_square.possible_fin
-    squares_at(possible_moves)
-  end
-
-  def squares_at(locations)
-    locations.map do |location|
-      square_at(location).possible_move
-    end
+    puts ' ABCDEFGH'
   end
 end

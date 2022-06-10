@@ -2,24 +2,17 @@ class Player
   attr_reader :color
   attr_accessor :error
 
-  def initialize(color:, error: nil)
+  def initialize(color:)
     @color = color
-    @error = error
   end
 
-  def select_square
-    loop do
-      puts 'Please enter the location of the piece you want to move: '
-      input = give_input
-      return input.chars if valid_format?(input)
-    end
+  def select_piece
+    puts "#{color.capitalize}, please select a piece:"
+    gets.chomp.chars
   end
 
-  def give_input
-    gets.chomp.downcase
-  end
-
-  def valid_format?(input)
-    input.match?(/^[a-h][1-8]$/)
+  def choose_destination
+    puts 'Choose among the possible moves: '
+    gets.chomp.chars
   end
 end

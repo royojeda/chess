@@ -1,7 +1,5 @@
-require './lib/board'
-require './lib/player'
 require './lib/game'
+require './lib/board'
 
-#system 'clear'
-game = Game.new
-game.turn
+test = Game.new
+test.play
