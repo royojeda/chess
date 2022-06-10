@@ -81,7 +81,7 @@ class Game
                    invalid_format_error
                  elsif board.empty_at?(start)
                    empty_square_error
-                 elsif !board.piece_owned?(current_player, start)
+                 elsif !board.own_piece_at?(current_player.color, start)
                    unowned_piece_error
                  end
   end
