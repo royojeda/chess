@@ -16,7 +16,7 @@ class Piece
                  board.own_piece_at?(color, square.fin_from(move))
 
         arr << square.fin_from(move)
-        break if board.square_at(square.fin_from(move)).enemy_piece?(color)
+        break if board.enemy_piece_at?(color, square.fin_from(move))
       end
     end
     arr
