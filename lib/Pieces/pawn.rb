@@ -9,7 +9,7 @@ class Pawn < Piece
 
   def all_fins(board, square)
     arr = []
-    moves.each do |direction|
+    moves(board).each do |direction|
       direction.each do |move|
         break if board.out_of_bounds?(square.fin_from(move)) ||
                  !board.square_at(square.fin_from(move)).empty?
@@ -20,18 +20,21 @@ class Pawn < Piece
     arr
   end
 
-  def moves
-    sign = move_direction
-    arr = [[0, "#{sign}1".to_i]]
+  def moves(board)
+    # arr << [[0, "#{sign}1".to_i]] if board.enemy_at_front_left?
+    arr = [[0, 1]]
     if first_move
       self.first_move = false
-      arr << [0, "#{sign}2".to_i]
+      arr << [0, 2]
     end
+    negate_direction(arr) if color == 'black'
     [arr]
   end
 
-  def move_direction
-    color == 'white' ? '+' : '-'
+  def negate_direction(coordinates)
+    coordinates.map! do |coordinate|
+      [-coordinate[0], -coordinate[1]]
+    end
   end
 
   def to_s
