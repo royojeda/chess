@@ -61,10 +61,6 @@ class Square
     (rank.ord + vertical_move).chr
   end
 
-  def moves
-    occupant.moves
-  end
-
   def empty?
     occupant == ' '
   end
