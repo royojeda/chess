@@ -12,10 +12,9 @@ class Pawn < Piece
     moves.each do |direction|
       direction.each do |move|
         break if board.square_at(square.fin_from(move)).nil? ||
-                 board.square_at(square.fin_from(move)).own_piece?(color)
+                 !board.square_at(square.fin_from(move)).empty?
 
         arr << square.fin_from(move)
-        break if board.square_at(square.fin_from(move)).enemy_piece?(color)
       end
     end
     arr
