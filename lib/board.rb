@@ -61,7 +61,7 @@ class Board
   end
 
   def piece_owned?(player, location)
-    square_at(location).owned_by?(player)
+    square_at(location).owned_by?(player.color)
   end
 
   def squares_at(locations)

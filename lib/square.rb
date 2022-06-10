@@ -38,25 +38,14 @@ class Square
   end
 
   def own_piece?(color)
-    !empty? && occupant.color == color
+    !empty? && owned_by?(color)
   end
 
   def enemy_piece?(color)
-    !empty? && occupant.color != color
+    !empty? && !owned_by?(color)
   end
 
   def all_fins(board)
-    # arr = []
-    # moves.each do |direction|
-    #   direction.each do |move|
-    #     break if board.square_at(fin_from(move)).nil? ||
-    #              board.square_at(fin_from(move)).own_piece?(occupant.color)
-
-    #     arr << fin_from(move)
-    #     break if board.square_at(fin_from(move)).enemy_piece?(occupant.color)
-    #   end
-    # end
-    # arr
     occupant.all_fins(board, self)
   end
 
@@ -80,8 +69,8 @@ class Square
     occupant == ' '
   end
 
-  def owned_by?(player)
-    occupant.color == player.color
+  def owned_by?(color)
+    occupant.color == color
   end
 
   # rubocop:disable Metrics/MethodLength
