@@ -134,7 +134,7 @@ class Square
   end
 
   def font_color
-    31
+    30
   end
 
   def background_color

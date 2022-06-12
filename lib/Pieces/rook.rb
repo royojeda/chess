@@ -19,15 +19,6 @@ class Rook < Piece
     [upward_moves, downward_moves, leftward_moves, rightward_moves]
   end
 
-  def to_s
-    case color
-    when 'white'
-      color_white
-    when 'black'
-      color_black
-    end
-  end
-
   def color_white
     "\u2656"
   end

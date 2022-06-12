@@ -57,15 +57,6 @@ class Pawn < Piece
     color == 'white' ? [1, 1] : [-1, -1]
   end
 
-  def to_s
-    case color
-    when 'white'
-      color_white
-    when 'black'
-      color_black
-    end
-  end
-
   def color_white
     "\u2659"
   end

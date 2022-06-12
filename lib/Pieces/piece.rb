@@ -21,4 +21,13 @@ class Piece
     end
     arr
   end
+
+  def to_s
+    case color
+    when 'white'
+      color_white
+    when 'black'
+      color_black
+    end
+  end
 end

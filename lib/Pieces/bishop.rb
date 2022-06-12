@@ -15,15 +15,6 @@ class Bishop < Piece
     [up_right_moves, up_left_moves, down_right_moves, down_left_moves]
   end
 
-  def to_s
-    case color
-    when 'white'
-      color_white
-    when 'black'
-      color_black
-    end
-  end
-
   def color_white
     "\u2657"
   end
