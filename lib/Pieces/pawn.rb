@@ -12,15 +12,17 @@ class Pawn < Piece
 
     moves.each do |direction|
       direction.each do |move|
-        break if board.out_of_bounds?(square.fin_from(move)) ||
-                 !board.square_at(square.fin_from(move)).empty?
+        fin = square.fin_from(move)
+        break if board.out_of_bounds?(fin) ||
+                 !board.square_at(fin).empty?
 
-        arr << square.fin_from(move)
+        arr << fin
       end
     end
 
     captures.each do |capture|
-      arr << square.fin_from(capture) if board.enemy_piece_at?(color, square.fin_from(capture))
+      fin = square.fin_from(capture)
+      arr << fin if board.enemy_piece_at?(color, fin)
     end
 
     arr

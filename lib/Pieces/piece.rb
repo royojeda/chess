@@ -12,11 +12,12 @@ class Piece
     arr = []
     moves.each do |direction|
       direction.each do |move|
-        break if board.out_of_bounds?(square.fin_from(move)) ||
-                 board.own_piece_at?(color, square.fin_from(move))
+        fin = square.fin_from(move)
+        break if board.out_of_bounds?(fin) ||
+                 board.own_piece_at?(color, fin)
 
-        arr << square.fin_from(move)
-        break if board.enemy_piece_at?(color, square.fin_from(move))
+        arr << fin
+        break if board.enemy_piece_at?(color, fin)
       end
     end
     arr
