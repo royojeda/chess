@@ -69,11 +69,7 @@ class Board
   end
 
   def squares_at(locations)
-    arr = []
-    locations.each do |location|
-      arr << square_at(location)
-    end
-    arr
+    locations.map { |location| square_at(location) }
   end
 
   def square_at(location)
