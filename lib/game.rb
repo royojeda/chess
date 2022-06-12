@@ -57,11 +57,8 @@ class Game
   end
 
   def check_move_errors
-    self.error = if !valid_format?(move)
-                   invalid_format_error
-                 elsif !board.valid_move?(move)
-                   invalid_move_error
-                 end
+    self.error = check_valid_format(move) ||
+                 check_valid_move(move)
   end
 
   def choose_destination
@@ -80,6 +77,10 @@ class Game
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
                  check_own_piece_at(start)
+  end
+
+  def check_valid_move(input)
+    invalid_move_error unless board.valid_move?(input)
   end
 
   def check_valid_format(input)
