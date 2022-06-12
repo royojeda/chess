@@ -51,8 +51,10 @@ class Board
   end
 
   def valid_move?(location)
+    file = location[0]
+    rank = location[1]
     valid_moves.any? do |move|
-      move.file == location[0] && move.rank == location[1]
+      move.file == file && move.rank == rank
     end
   end
 
