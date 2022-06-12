@@ -77,13 +77,21 @@ class Game
   end
 
   def check_start_errors
-    self.error = if !valid_format?(start)
-                   invalid_format_error
-                 elsif board.empty_at?(start)
-                   empty_square_error
-                 elsif !board.own_piece_at?(current_player.color, start)
-                   unowned_piece_error
-                 end
+    self.error = check_valid_format(start) ||
+                 check_empty_square_at(start) ||
+                 check_own_piece_at(start)
+  end
+
+  def check_valid_format(input)
+    invalid_format_error unless valid_format?(input)
+  end
+
+  def check_empty_square_at(input)
+    empty_square_error if board.empty_at?(input)
+  end
+
+  def check_own_piece_at(input)
+    unowned_piece_error unless board.own_piece_at?(current_player.color, input)
   end
 
   def valid_format?(input)
