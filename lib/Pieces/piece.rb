@@ -1,10 +1,11 @@
 class Piece
   attr_reader :color
-  attr_accessor :square
+  attr_accessor :square, :previous
 
   def initialize(**opts)
     @color = opts[:color]
     @square = opts[:square]
+    @previous = nil
     post_initialize
   end
 

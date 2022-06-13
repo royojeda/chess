@@ -17,6 +17,10 @@ class Square
     @occupant = determine_occupant
   end
 
+  def store_as_previous
+    occupant.previous = self
+  end
+
   def highlight_none
     self.status = ''
   end

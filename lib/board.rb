@@ -37,6 +37,7 @@ class Board
   def move(start, move)
     source = square_at(start)
     destination = square_at(move)
+    source.store_as_previous
     destination.update_occupant(source)
     source.remove_occupant
     squares.each(&:highlight_none)
