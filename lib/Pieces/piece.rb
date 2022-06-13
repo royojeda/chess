@@ -1,18 +1,20 @@
 class Piece
   attr_reader :color
+  attr_accessor :square
 
   def initialize(**opts)
     @color = opts[:color]
+    @square = opts[:square]
     post_initialize
   end
 
   def post_initialize; end
 
-  def all_destinations(board, square)
+  def all_destinations(board)
     arr = []
     moves.each do |direction|
       direction.each do |move|
-        destination = square.destination_from(move)
+        destination = destination_from(move)
         break if board.out_of_bounds?(destination) ||
                  board.own_piece_at?(color, destination)
 
@@ -21,6 +23,26 @@ class Piece
       end
     end
     arr
+  end
+
+  def destination_from(move)
+    [destination_file(move[0]), destination_rank(move[1])]
+  end
+
+  def destination_file(horizontal_move)
+    (file.ord + horizontal_move).chr
+  end
+
+  def destination_rank(vertical_move)
+    (rank.ord + vertical_move).chr
+  end
+
+  def file
+    square.file
+  end
+
+  def rank
+    square.rank
   end
 
   def to_s

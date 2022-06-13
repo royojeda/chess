@@ -7,12 +7,12 @@ class Pawn < Piece
     @first_move = true
   end
 
-  def all_destinations(board, square)
+  def all_destinations(board)
     arr = []
 
     moves.each do |direction|
       direction.each do |move|
-        destination = square.destination_from(move)
+        destination = destination_from(move)
         break if board.out_of_bounds?(destination) ||
                  !board.square_at(destination).empty?
 
@@ -21,7 +21,7 @@ class Pawn < Piece
     end
 
     captures.each do |capture|
-      destination = square.destination_from(capture)
+      destination = destination_from(capture)
       arr << destination if board.enemy_piece_at?(color, destination)
     end
 

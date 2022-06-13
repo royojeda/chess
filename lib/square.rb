@@ -27,6 +27,7 @@ class Square
 
   def update_occupant(source)
     self.occupant = source.occupant
+    occupant.square = self
   end
 
   def highlight_blue
@@ -46,19 +47,7 @@ class Square
   end
 
   def all_destinations(board)
-    occupant.all_destinations(board, self)
-  end
-
-  def destination_from(move)
-    [destination_file(move[0]), destination_rank(move[1])]
-  end
-
-  def destination_file(horizontal_move)
-    (file.ord + horizontal_move).chr
-  end
-
-  def destination_rank(vertical_move)
-    (rank.ord + vertical_move).chr
+    occupant.all_destinations(board)
   end
 
   def empty?
@@ -97,12 +86,12 @@ class Square
       Queen
     when 'e'
       King
-    end.new(color:)
+    end.new(color:, square: self)
   end
   # rubocop:enable Metrics/MethodLength
 
   def create_pawn(color)
-    Pawn.new(color:)
+    Pawn.new(color:, square: self)
   end
 
   def determine_color
