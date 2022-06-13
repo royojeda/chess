@@ -1,11 +1,12 @@
 require './lib/square'
 
 class Board
-  attr_accessor :squares, :valid_moves
+  attr_accessor :squares, :valid_moves, :last_piece_to_move
 
   def initialize(squares: starting_condition)
     @squares = squares
     @valid_moves = nil
+    @last_piece_to_move = nil
   end
 
   def starting_condition
@@ -40,6 +41,7 @@ class Board
     source.store_as_previous
     destination.update_occupant(source)
     source.remove_occupant
+    self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
   end
 
