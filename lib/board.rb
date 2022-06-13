@@ -35,6 +35,16 @@ class Board
     square_at(location).nil?
   end
 
+  def allows_en_passant_by?(attacker, side)
+    location = attacker.location
+    location[0] = (location[0].ord + side).chr
+    enemy_pawn_at?(attacker.color, location)
+  end
+
+  def enemy_pawn_at?(color, location)
+    square_at(location).contains_enemy_pawn?(color)
+  end
+
   def move(start, move)
     source = square_at(start)
     destination = square_at(move)

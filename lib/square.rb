@@ -17,6 +17,10 @@ class Square
     @occupant = determine_occupant
   end
 
+  def contains_enemy_pawn?(color)
+    enemy_piece?(color) && occupant.is_a?(Pawn)
+  end
+
   def store_as_previous
     occupant.previous = self
   end

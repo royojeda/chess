@@ -7,6 +7,10 @@ class Pawn < Piece
     @first_move = true
   end
 
+  def location
+    [square.file, square.rank]
+  end
+
   def previous_is_two_forward?
     square.rank == (previous.rank.ord + 2).chr ||
       square.rank == (previous.rank.ord - 2).chr
@@ -27,7 +31,8 @@ class Pawn < Piece
 
     captures.each do |capture|
       destination = destination_from(capture)
-      arr << destination if board.enemy_piece_at?(color, destination)
+      arr << destination if board.enemy_piece_at?(color, destination) ||
+                            board.allows_en_passant_by?(self, capture[0])
     end
 
     arr
