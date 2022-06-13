@@ -26,6 +26,9 @@ class Piece
     arr
   end
 
+  def previous_is_two_forward?
+  end
+
   def destination_from(move)
     [destination_file(move[0]), destination_rank(move[1])]
   end

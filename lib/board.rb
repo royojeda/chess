@@ -38,7 +38,12 @@ class Board
   def allows_en_passant_by?(attacker, side)
     location = attacker.location
     location[0] = (location[0].ord + side).chr
-    enemy_pawn_at?(attacker.color, location)
+    enemy_pawn_at?(attacker.color, location) &&
+      piece_at(location) == last_piece_to_move
+  end
+
+  def piece_at(location)
+    square_at(location).occupant
   end
 
   def enemy_pawn_at?(color, location)
