@@ -45,8 +45,8 @@ class Board
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue
-    fins = start.all_fins(self)
-    self.valid_moves = squares_at(fins).compact
+    destinations = start.all_destinations(self)
+    self.valid_moves = squares_at(destinations).compact
     valid_moves.each(&:highlight_green)
   end
 

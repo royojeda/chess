@@ -45,19 +45,19 @@ class Square
     !empty? && !owned_by?(color)
   end
 
-  def all_fins(board)
-    occupant.all_fins(board, self)
+  def all_destinations(board)
+    occupant.all_destinations(board, self)
   end
 
-  def fin_from(move)
-    [fin_file(move[0]), fin_rank(move[1])]
+  def destination_from(move)
+    [destination_file(move[0]), destination_rank(move[1])]
   end
 
-  def fin_file(horizontal_move)
+  def destination_file(horizontal_move)
     (file.ord + horizontal_move).chr
   end
 
-  def fin_rank(vertical_move)
+  def destination_rank(vertical_move)
     (rank.ord + vertical_move).chr
   end
 

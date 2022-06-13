@@ -8,16 +8,16 @@ class Piece
 
   def post_initialize; end
 
-  def all_fins(board, square)
+  def all_destinations(board, square)
     arr = []
     moves.each do |direction|
       direction.each do |move|
-        fin = square.fin_from(move)
-        break if board.out_of_bounds?(fin) ||
-                 board.own_piece_at?(color, fin)
+        destination = square.destination_from(move)
+        break if board.out_of_bounds?(destination) ||
+                 board.own_piece_at?(color, destination)
 
-        arr << fin
-        break if board.enemy_piece_at?(color, fin)
+        arr << destination
+        break if board.enemy_piece_at?(color, destination)
       end
     end
     arr
