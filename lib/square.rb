@@ -32,6 +32,7 @@ class Square
   def update_occupant(source)
     self.occupant = source.occupant
     occupant.square = self
+    occupant.previous_is_two_forward?
   end
 
   def highlight_blue

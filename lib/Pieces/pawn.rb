@@ -7,6 +7,11 @@ class Pawn < Piece
     @first_move = true
   end
 
+  def previous_is_two_forward?
+    square.rank == (previous.rank.ord + 2).chr ||
+      square.rank == (previous.rank.ord - 2).chr
+  end
+
   def all_destinations(board)
     arr = []
 
