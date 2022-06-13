@@ -17,8 +17,12 @@ class Square
     @occupant = determine_occupant
   end
 
+  def contains_pawn?
+    occupant.is_a?(Pawn)
+  end
+
   def contains_enemy_pawn?(color)
-    enemy_piece?(color) && occupant.is_a?(Pawn)
+    enemy_piece?(color) && contains_pawn?
   end
 
   def store_as_previous
@@ -36,7 +40,6 @@ class Square
   def update_occupant(source)
     self.occupant = source.occupant
     occupant.square = self
-    occupant.previous_is_two_forward?
   end
 
   def highlight_blue

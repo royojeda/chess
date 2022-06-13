@@ -57,8 +57,22 @@ class Board
     source.store_as_previous
     destination.update_occupant(source)
     source.remove_occupant
+    square_behind(destination).remove_occupant if en_passant?(source, destination)
     self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
+  end
+
+  def en_passant?(source, destination)
+    destination.contains_pawn? && source.file != destination.file
+  end
+
+  def square_behind(square)
+    location = if square.owned_by?('white')
+                 [square.file, (square.rank.ord - 1).chr]
+               else
+                 [square.file, (square.rank.ord + 1).chr]
+               end
+    square_at(location)
   end
 
   def show_moves_from(location)
