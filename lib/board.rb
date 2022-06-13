@@ -39,7 +39,8 @@ class Board
     location = attacker.location
     location[0] = (location[0].ord + side).chr
     enemy_pawn_at?(attacker.color, location) &&
-      piece_at(location) == last_piece_to_move
+      piece_at(location) == last_piece_to_move &&
+      piece_at(location).previous_is_two_forward?
   end
 
   def piece_at(location)
