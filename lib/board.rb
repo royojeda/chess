@@ -103,9 +103,21 @@ class Board
   def show_moves_from(location)
     start = square_at(location)
     start.highlight_blue
-    destinations = start.all_destinations(self)
-    self.valid_moves = squares_at(destinations).compact
+    destinations = start.all_destinations(self).compact
+    valids = destinations.select do |move|
+      no_check_after?(location, move)
+    end
+    self.valid_moves = squares_at(valids)
     valid_moves.each(&:highlight_green)
+  end
+
+  def no_check_after?(start, destination)
+    save = Marshal.dump(squares)
+    move(start, destination)
+    color = square_at(destination).occupant.color
+    result = !check?(color)
+    self.squares = Marshal.load(save)
+    result
   end
 
   def valid_move?(location)
