@@ -2,8 +2,8 @@ require './lib/board'
 require './lib/player'
 
 class Game
-  attr_reader :board, :players
-  attr_accessor :error, :start, :move
+  attr_reader :players
+  attr_accessor :error, :start, :move, :board
 
   def initialize
     @board = Board.new
@@ -29,9 +29,13 @@ class Game
 
   def turn
     check_check
-    select_start
-    show_moves_from_start
-    select_move
+    loop do
+      save = Marshal.dump(board)
+      select_start
+      show_moves_from_start
+      select_move(save)
+      break if move != start
+    end
     execute_move
     switch_players
   end
@@ -49,11 +53,12 @@ class Game
     board.show_moves_from(start)
   end
 
-  def select_move
+  def select_move(save)
     loop do
       display
       choose_destination
       check_move_errors
+      self.board = Marshal.load(save) if move == start
       break if valid_input?
     end
   end
@@ -95,7 +100,7 @@ class Game
   end
 
   def check_valid_move(input)
-    invalid_move_error unless board.valid_move?(input)
+    invalid_move_error unless board.valid_move?(input) || move == start
   end
 
   def check_valid_format(input)
