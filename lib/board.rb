@@ -31,6 +31,17 @@ class Board
     ('a'..'h').to_a
   end
 
+  def no_moves_for?(location)
+    arr = []
+    square = square_at(location)
+    destinations = square.all_destinations(self).compact
+    valids = destinations.select do |move|
+      no_check_after?([square.file, square.rank], move)
+    end
+    arr.concat(squares_at(valids))
+    arr.empty?
+  end
+
   def square_of_own_king(color)
     squares.find do |square|
       square.contains_own_king?(color)

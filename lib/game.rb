@@ -82,7 +82,12 @@ class Game
   def check_start_errors
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
-                 check_own_piece_at(start)
+                 check_own_piece_at(start) ||
+                 check_no_moves(start)
+  end
+
+  def check_no_moves(input)
+    no_moves_error if board.no_moves_for?(input)
   end
 
   def check_check
@@ -109,6 +114,10 @@ class Game
     input.length == 2 &&
       input[0].match?(/^[a-h]$/) &&
       input[1].match?(/^[1-8]$/)
+  end
+
+  def no_moves_error
+    'That piece has no valid moves for this turn.'
   end
 
   def invalid_move_error
