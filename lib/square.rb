@@ -17,6 +17,14 @@ class Square
     @occupant = determine_occupant
   end
 
+  def contains_own_king?(color)
+    own_piece?(color) && contains_king?
+  end
+
+  def contains_king?
+    occupant.is_a?(King)
+  end
+
   def contains_pawn?
     occupant.is_a?(Pawn)
   end
@@ -40,6 +48,7 @@ class Square
   def update_occupant(source)
     self.occupant = source.occupant
     occupant.square = self
+    occupant.moved if contains_pawn?
   end
 
   def highlight_blue

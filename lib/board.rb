@@ -31,6 +31,28 @@ class Board
     ('a'..'h').to_a
   end
 
+  def square_of_own_king(color)
+    squares.find do |square|
+      square.contains_own_king?(color)
+    end
+  end
+
+  def all_enemy_moves(color)
+    current_player_squares = squares.select do |square|
+      square.enemy_piece?(color)
+    end
+    arr = []
+    current_player_squares.each do |square|
+      destinations = square.all_destinations(self)
+      arr.concat(squares_at(destinations).compact)
+    end
+    arr
+  end
+
+  def check?(color)
+    all_enemy_moves(color).include?(square_of_own_king(color))
+  end
+
   def out_of_bounds?(location)
     square_at(location).nil?
   end
@@ -48,7 +70,8 @@ class Board
   end
 
   def enemy_pawn_at?(color, location)
-    square_at(location).contains_enemy_pawn?(color)
+    !out_of_bounds?(location) &&
+      square_at(location).contains_enemy_pawn?(color)
   end
 
   def move(start, move)
@@ -100,7 +123,8 @@ class Board
   end
 
   def enemy_piece_at?(color, location)
-    square_at(location).enemy_piece?(color)
+    !out_of_bounds?(location) &&
+      square_at(location).enemy_piece?(color)
   end
 
   def squares_at(locations)

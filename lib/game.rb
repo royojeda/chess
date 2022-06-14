@@ -23,6 +23,7 @@ class Game
   end
 
   def turn
+    check_check
     select_start
     show_moves_from_start
     select_move
@@ -77,6 +78,10 @@ class Game
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
                  check_own_piece_at(start)
+  end
+
+  def check_check
+    self.error = 'Check!' if board.check?(current_player.color)
   end
 
   def check_valid_move(input)

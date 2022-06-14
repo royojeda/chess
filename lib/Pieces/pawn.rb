@@ -38,14 +38,13 @@ class Pawn < Piece
     arr
   end
 
+  def moved
+    self.first_move = false
+  end
+
   def moves
     arr = [one_forward]
-
-    if first_move
-      self.first_move = false
-      arr << two_forward
-    end
-
+    arr << two_forward if first_move
     [arr]
   end
 
