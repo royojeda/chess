@@ -17,6 +17,10 @@ class Square
     @occupant = determine_occupant
   end
 
+  def place(piece)
+    self.occupant = piece
+  end
+
   def contains_own_king?(color)
     own_piece?(color) && contains_king?
   end
@@ -49,6 +53,18 @@ class Square
     self.occupant = source.occupant
     occupant.square = self
     occupant.moved if contains_pawn?
+  end
+
+  def promotable?
+    contains_pawn? && on_last_rank?
+  end
+
+  def last_rank
+    occupant.color == 'white' ? '8' : '1'
+  end
+
+  def on_last_rank?
+    rank == last_rank
   end
 
   def highlight_blue

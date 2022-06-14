@@ -117,6 +117,15 @@ class Board
     destination.highlight_blue
   end
 
+  def place(piece, move)
+    square_at(move).place(piece)
+  end
+
+  def promotable?(move)
+    destination = square_at(move)
+    destination.promotable?
+  end
+
   def en_passant?(source, destination)
     destination.contains_pawn? && source.file != destination.file
   end
