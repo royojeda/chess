@@ -83,6 +83,8 @@ class Board
     square_behind(destination).remove_occupant if en_passant?(source, destination)
     self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
+    source.highlight_blue
+    destination.highlight_blue
   end
 
   def en_passant?(source, destination)
