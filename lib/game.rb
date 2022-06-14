@@ -14,12 +14,17 @@ class Game
   end
 
   def play
-    turn until over?
+    loop do
+      break if over?
+
+      turn
+    end
+    self.error = "Checkmate! #{players[1].color.capitalize} wins!"
+    display
   end
 
   def over?
-    # temporary
-    false
+    board.checkmate?(current_player.color)
   end
 
   def turn

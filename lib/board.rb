@@ -49,6 +49,25 @@ class Board
     arr
   end
 
+  def all_own_moves(color)
+    current_player_squares = squares.select do |square|
+      square.own_piece?(color)
+    end
+    arr = []
+    current_player_squares.each do |square|
+      destinations = square.all_destinations(self).compact
+      valids = destinations.select do |move|
+        no_check_after?([square.file, square.rank], move)
+      end
+      arr.concat(squares_at(valids))
+    end
+    arr
+  end
+
+  def checkmate?(color)
+    check?(color) && all_own_moves(color).empty?
+  end
+
   def check?(color)
     all_enemy_moves(color).include?(square_of_own_king(color))
   end
