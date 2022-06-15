@@ -1,12 +1,6 @@
 require './lib/Pieces/piece'
 
 class Pawn < Piece
-  attr_accessor :first_move
-
-  def post_initialize
-    @first_move = true
-  end
-
   def location
     [square.file, square.rank]
   end
@@ -36,10 +30,6 @@ class Pawn < Piece
     end
 
     arr
-  end
-
-  def moved
-    self.first_move = false
   end
 
   def moves

@@ -48,6 +48,10 @@ class Board
     end
   end
 
+  def attacked?(color, location)
+    all_enemy_moves(color).include?(square_at(location))
+  end
+
   def all_enemy_moves(color)
     current_player_squares = squares.select do |square|
       square.enemy_piece?(color)
@@ -104,8 +108,13 @@ class Board
       square_at(location).contains_enemy_pawn?(color)
   end
 
+  def can_castle?(color, location)
+    square_at(location).can_castle?(color)
+  end
+
   def move(start, move)
     source = square_at(start)
+    p move
     destination = square_at(move)
     source.store_as_previous
     destination.update_occupant(source)

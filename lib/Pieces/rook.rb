@@ -1,10 +1,6 @@
 require './lib/Pieces/piece'
 
 class Rook < Piece
-  def post_initialize
-    @first_move = true
-  end
-
   def moves
     [upward_moves, downward_moves, leftward_moves, rightward_moves]
   end

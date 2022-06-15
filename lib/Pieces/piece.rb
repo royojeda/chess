@@ -1,15 +1,17 @@
 class Piece
   attr_reader :color
-  attr_accessor :square, :previous
+  attr_accessor :square, :previous, :first_move
 
   def initialize(**opts)
     @color = opts[:color]
     @square = opts[:square]
     @previous = nil
-    post_initialize
+    @first_move = true
   end
 
-  def post_initialize; end
+  def moved
+    self.first_move = false
+  end
 
   def all_destinations(board)
     arr = []

@@ -21,6 +21,14 @@ class Square
     self.occupant = piece
   end
 
+  def can_castle?(color)
+    own_piece?(color) && contains_rook? && occupant.first_move
+  end
+
+  def contains_rook?
+    occupant.is_a?(Rook)
+  end
+
   def contains_own_king?(color)
     own_piece?(color) && contains_king?
   end
@@ -52,7 +60,7 @@ class Square
   def update_occupant(source)
     self.occupant = source.occupant
     occupant.square = self
-    occupant.moved if contains_pawn?
+    occupant.moved
   end
 
   def promotable?
