@@ -244,6 +244,6 @@ class Board
       print square
       puts if square.file == 'h'
     end
-    puts ' ABCDEFGH'
+    puts ' A B C D E F G H'
   end
 end
