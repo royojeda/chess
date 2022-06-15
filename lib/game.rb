@@ -18,9 +18,11 @@ class Game
       break if over?
 
       turn
+      return true if start == 'save'.chars
     end
     self.error = "Checkmate! #{players[1].color.capitalize} wins!"
     display
+    false
   end
 
   def over?
@@ -32,6 +34,8 @@ class Game
     loop do
       save = Marshal.dump(board)
       select_start
+      return if start == 'save'.chars
+
       show_moves_from_start
       select_move(save)
       break if move != start
@@ -44,6 +48,8 @@ class Game
     loop do
       display
       select_piece
+      return if start == 'save'.chars
+
       check_start_errors
       break if valid_input?
     end
@@ -110,6 +116,8 @@ class Game
   end
 
   def check_start_errors
+    return if start == 'save'
+
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
                  check_own_piece_at(start) ||
