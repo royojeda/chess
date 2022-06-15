@@ -53,11 +53,13 @@ class Board
   end
 
   def all_enemy_moves(color)
-    current_player_squares = squares.select do |square|
+    other_player_squares = squares.select do |square|
       square.enemy_piece?(color)
     end
     arr = []
-    current_player_squares.each do |square|
+    other_player_squares.each do |square|
+      next if square.contains_king?
+
       destinations = square.all_destinations(self)
       arr.concat(squares_at(destinations).compact)
     end
@@ -114,12 +116,12 @@ class Board
 
   def move(start, move)
     source = square_at(start)
-    p move
     destination = square_at(move)
     source.store_as_previous
     destination.update_occupant(source)
     source.remove_occupant
     square_behind(destination).remove_occupant if en_passant?(source, destination)
+    # move().remove_occupant if castle?(source, destination)
     self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
     source.highlight_blue

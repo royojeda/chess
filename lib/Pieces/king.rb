@@ -37,7 +37,7 @@ class King < Piece
   end
 
   def valid_castle?(destination, board)
-    first_move &&
+    !board.check?(color) && first_move &&
       if destination[0] > square.file
         first_right = [(square.file.ord + 1).chr, square.rank]
         second_right = [(square.file.ord + 2).chr, square.rank]
