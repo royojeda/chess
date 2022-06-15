@@ -121,11 +121,19 @@ class Board
     destination.update_occupant(source)
     source.remove_occupant
     square_behind(destination).remove_occupant if en_passant?(source, destination)
-    # move().remove_occupant if castle?(source, destination)
     self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
     source.highlight_blue
     destination.highlight_blue
+  end
+
+  def castle?(start, move)
+    source = square_at(start)
+    destination = square_at(move)
+    destination.contains_king? &&
+      source.rank == destination.rank &&
+      (source.file.ord + 1).chr != destination.file &&
+      (source.file.ord - 1).chr != destination.file
   end
 
   def place(piece, move)
