@@ -156,11 +156,11 @@ class Square
   end
 
   def to_s
-    "\e[#{font_color};48;5;#{background_color}m#{occupant}\e[0m"
+    "\e[38;5;#{font_color};48;5;#{background_color}m#{occupant}\e[0m"
   end
 
   def font_color
-    30
+    16
   end
 
   def background_color
