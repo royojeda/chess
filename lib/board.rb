@@ -97,8 +97,12 @@ class Board
     location = attacker.location
     location[0] = (location[0].ord + side).chr
     enemy_pawn_at?(attacker.color, location) &&
-      piece_at(location) == last_piece_to_move &&
+      chance_not_passed(location) &&
       piece_at(location).previous_is_two_forward?
+  end
+
+  def chance_not_passed(location)
+    location == last_piece_to_move.location
   end
 
   def piece_at(location)
@@ -189,11 +193,17 @@ class Board
   end
 
   def no_check_after?(start, destination)
-    save = Marshal.dump(squares)
-    move(start, destination)
+    save_squares = Marshal.dump(squares)
+
+    source = square_at(start)
+    fin = square_at(destination)
+    fin.update_occupant(source)
+    source.remove_occupant
+    square_behind(fin).remove_occupant if en_passant?(source, fin)
+
     color = square_at(destination).occupant.color
     result = !check?(color)
-    self.squares = Marshal.load(save)
+    self.squares = Marshal.load(save_squares)
     result
   end
 

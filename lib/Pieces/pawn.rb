@@ -1,10 +1,6 @@
 require './lib/Pieces/piece'
 
 class Pawn < Piece
-  def location
-    [square.file, square.rank]
-  end
-
   def previous_is_two_forward?
     square.rank == (previous.rank.ord + 2).chr ||
       square.rank == (previous.rank.ord - 2).chr

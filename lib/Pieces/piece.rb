@@ -9,6 +9,10 @@ class Piece
     @first_move = true
   end
 
+  def location
+    [square.file, square.rank]
+  end
+
   def moved
     self.first_move = false
   end
