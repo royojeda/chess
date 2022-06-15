@@ -131,12 +131,12 @@ class Square
       Queen
     when 'e'
       King
-    end.new(color:, square: self)
+    end.new(color: color, square: self)
   end
   # rubocop:enable Metrics/MethodLength
 
   def create_pawn(color)
-    Pawn.new(color:, square: self)
+    Pawn.new(color: color, square: self)
   end
 
   def determine_color
@@ -204,6 +204,6 @@ class Square
   end
 
   def background_dark
-    3
+    94
   end
 end

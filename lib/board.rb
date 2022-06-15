@@ -11,7 +11,7 @@ class Board
 
   def starting_condition
     arr = []
-    each_location { |rank, file| arr << Square.new(rank:, file:) }
+    each_location { |rank, file| arr << Square.new(rank: rank, file: file) }
     arr
   end
 
