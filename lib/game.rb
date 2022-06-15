@@ -66,6 +66,7 @@ class Game
   def execute_move
     board.move(start, move)
     promote if board.promotable?(move)
+    board.rook_castle_move(move) if board.castle?(start, move)
   end
 
   def promote

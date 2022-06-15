@@ -127,6 +127,25 @@ class Board
     destination.highlight_blue
   end
 
+  def rook_castle_move(move)
+    rank = move[1]
+    king_end_file = move[0]
+    if king_end_file == 'g'
+      file_of_rook_to_move = 'h'
+      rook_end_file = 'f'
+    else
+      file_of_rook_to_move = 'a'
+      rook_end_file = 'd'
+    end
+    start = [file_of_rook_to_move, rank]
+    fin = [rook_end_file, rank]
+    source = square_at(start)
+    destination = square_at(fin)
+    source.store_as_previous
+    destination.update_occupant(source)
+    source.remove_occupant
+  end
+
   def castle?(start, move)
     source = square_at(start)
     destination = square_at(move)
