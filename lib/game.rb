@@ -20,13 +20,16 @@ class Game
       turn
       return true if start == 'save'.chars
     end
-    self.error = "Checkmate! #{players[1].color.capitalize} wins!"
     display
     false
   end
 
   def over?
-    board.checkmate?(current_player.color)
+    if board.checkmate?(current_player.color)
+      self.error = "Checkmate! #{players[1].color.capitalize} wins!"
+    elsif board.stalemate?(current_player.color)
+      self.error = 'Stalemate! The game ends in a draw.'
+    end
   end
 
   def turn
