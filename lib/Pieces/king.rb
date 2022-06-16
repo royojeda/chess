@@ -1,18 +1,16 @@
 require './lib/Pieces/piece'
+require './lib/Modules/movable'
 
 class King < Piece
-  def moves
-    upward_moves = [[0, 1]]
-    downward_moves = [[0, -1]]
-    leftward_moves = [[-1, 0]]
-    rightward_moves = [[1, 0]]
-    up_right_moves = [[1, 1]]
-    up_left_moves = [[-1, 1]]
-    down_right_moves = [[1, -1]]
-    down_left_moves = [[-1, -1]]
+  include Movable
 
-    [upward_moves, downward_moves, leftward_moves, rightward_moves,
-     up_right_moves, up_left_moves, down_right_moves, down_left_moves]
+  def moves
+    [upward_moves(range), downward_moves(range), leftward_moves(range), rightward_moves(range),
+     up_right_moves(range), up_left_moves(range), down_right_moves(range), down_left_moves(range)]
+  end
+
+  def range
+    1
   end
 
   def all_destinations(board)
