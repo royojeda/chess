@@ -1,6 +1,5 @@
 class Player
   attr_reader :color
-  attr_accessor :error
 
   def initialize(color:)
     @color = color
