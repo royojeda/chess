@@ -16,17 +16,7 @@ class King < Piece
   end
 
   def all_destinations(board)
-    arr = []
-    moves.each do |direction|
-      direction.each do |move|
-        destination = destination_from(move)
-        break if board.out_of_bounds?(destination) ||
-                 board.own_piece_at?(color, destination)
-
-        arr << destination
-        break if board.enemy_piece_at?(color, destination)
-      end
-    end
+    arr = super
 
     castles.each do |castle|
       destination = destination_from(castle)
