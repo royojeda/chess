@@ -1,9 +1,11 @@
 require './lib/board'
 require './lib/player'
 require './lib/Modules/promotion'
+require './lib/Modules/notices'
 
 class Game
   include Promotion
+  include Notices
 
   attr_reader :players
   attr_accessor :notice, :start, :move, :board
@@ -38,20 +40,20 @@ class Game
     check?(current_player) ? checkmate : stalemate
   end
 
+  def checkmate
+    self.notice = checkmate_notice
+  end
+
+  def stalemate
+    self.notice = stalemate_notice
+  end
+
   def no_valid_moves_for?(player)
     board.all_own_moves(player.color).empty?
   end
 
   def check?(player)
     board.check?(player.color)
-  end
-
-  def checkmate
-    self.notice = "Checkmate! #{players[1].color.capitalize} wins!"
-  end
-
-  def stalemate
-    self.notice = 'Stalemate! The game ends in a draw.'
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -163,32 +165,16 @@ class Game
       input[1].match?(/^[1-8]$/)
   end
 
-  def no_moves_error
-    'That piece has no valid moves for this turn.'
-  end
-
-  def invalid_move_error
-    'Invalid move.'
-  end
-
-  def invalid_format_error
-    'Invalid format.'
-  end
-
-  def empty_square_error
-    'That square is empty.'
-  end
-
-  def unowned_piece_error
-    'That piece is not yours.'
-  end
-
   def switch_players
     players.rotate!
   end
 
   def current_player
     players.first
+  end
+
+  def other_player
+    players.last
   end
 
   def display
