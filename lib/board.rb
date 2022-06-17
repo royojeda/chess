@@ -53,11 +53,8 @@ class Board
   end
 
   def all_enemy_moves(color)
-    other_player_squares = squares.select do |square|
-      square.enemy_piece?(color)
-    end
     arr = []
-    other_player_squares.each do |square|
+    enemy_squares(color).each do |square|
       next if square.contains_king?
 
       destinations = square.all_destinations(self)
@@ -67,11 +64,8 @@ class Board
   end
 
   def all_own_moves(color)
-    current_player_squares = squares.select do |square|
-      square.own_piece?(color)
-    end
     arr = []
-    current_player_squares.each do |square|
+    own_squares(color).each do |square|
       destinations = square.all_destinations(self).compact
       valids = destinations.select do |move|
         no_check_after?([square.file, square.rank], move)
@@ -81,12 +75,16 @@ class Board
     arr
   end
 
-  def checkmate?(color)
-    check?(color) && all_own_moves(color).empty?
+  def enemy_squares(color)
+    squares.select do |square|
+      square.enemy_piece?(color)
+    end
   end
 
-  def stalemate?(color)
-    !check?(color) && all_own_moves(color).empty?
+  def own_squares(color)
+    squares.select do |square|
+      square.own_piece?(color)
+    end
   end
 
   def check?(color)
@@ -205,7 +203,7 @@ class Board
     source.remove_occupant
     square_behind(fin).remove_occupant if en_passant?(source, fin)
 
-    color = square_at(destination).occupant.color
+    color = piece_at(destination).color
     result = !check?(color)
     self.squares = Marshal.load(save_squares)
     result

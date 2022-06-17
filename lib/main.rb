@@ -1,8 +1,4 @@
 require './lib/game'
-# require './lib/board'
-
-# test = Game.new
-# test.play
 
 def ask_load
   puts 'Do you want to load a saved game? (y/n): '

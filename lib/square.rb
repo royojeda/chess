@@ -22,7 +22,11 @@ class Square
   end
 
   def can_castle?(color)
-    own_piece?(color) && contains_rook? && occupant.first_move
+    contains_own_rook?(color) && occupant.first_move
+  end
+
+  def contains_own_rook?(color)
+    own_piece?(color) && contains_rook?
   end
 
   def contains_rook?

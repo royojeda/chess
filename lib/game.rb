@@ -5,12 +5,17 @@ class Game
   attr_reader :players
   attr_accessor :error, :start, :move, :board
 
-  def initialize
-    @board = Board.new
-    @error = nil
-    @start = nil
-    @move = nil
-    @players = [Player.new(color: 'white'), Player.new(color: 'black')]
+  def initialize(board: Board.new,
+                 players: [Player.new(color: 'white'),
+                           Player.new(color: 'black')],
+                 error: nil,
+                 start: nil,
+                 move: nil)
+    @board = board
+    @players = players
+    @error = error
+    @start = start
+    @move = move
   end
 
   def play
@@ -25,36 +30,54 @@ class Game
   end
 
   def over?
-    if board.checkmate?(current_player.color)
-      self.error = "Checkmate! #{players[1].color.capitalize} wins!"
-    elsif board.stalemate?(current_player.color)
-      self.error = 'Stalemate! The game ends in a draw.'
-    end
+    return false unless no_valid_moves_for?(current_player)
+
+    check?(current_player) ? checkmate : stalemate
+  end
+
+  def no_valid_moves_for?(player)
+    board.all_own_moves(player.color).empty?
+  end
+
+  def check?(player)
+    board.check?(player.color)
+  end
+
+  def checkmate
+    self.error = "Checkmate! #{players[1].color.capitalize} wins!"
+  end
+
+  def stalemate
+    self.error = 'Stalemate! The game ends in a draw.'
   end
 
   def turn
     check_check
+    board_save = Marshal.dump(board)
     loop do
-      save = Marshal.dump(board)
       select_start
-      return if start == 'save'.chars
+      return if save?
 
       show_moves_from_start
-      select_move(save)
-      break if move != start
+      select_move
+      break unless changed_mind?
+
+      self.board = Marshal.load(board_save)
     end
     execute_move
     switch_players
+  end
+
+  def save?
+    start == 'save'.chars
   end
 
   def select_start
     loop do
       display
       select_piece
-      return if start == 'save'.chars
-
-      check_start_errors
-      break if valid_input?
+      check_start_errors unless save?
+      break if save? || valid_input?
     end
   end
 
@@ -62,14 +85,17 @@ class Game
     board.show_moves_from(start)
   end
 
-  def select_move(save)
+  def select_move
     loop do
       display
       choose_destination
-      check_move_errors
-      self.board = Marshal.load(save) if move == start
-      break if valid_input?
+      check_move_errors unless changed_mind?
+      break if changed_mind? || valid_input?
     end
+  end
+
+  def changed_mind?
+    move == start
   end
 
   def execute_move
@@ -80,25 +106,37 @@ class Game
 
   def promote
     self.error = 'Pawn promotion!'
-    loop do
+    type = choose_replacement
+    new_piece = type.new(color: current_player.color, square: board.square_at(move))
+    board.place(new_piece, move)
+    self.error = nil
+  end
+
+  def choose_replacement(type = nil)
+    while type.nil?
       display
-      puts 'Please select a replacement piece: (1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight?)'
+      promotion_prompt
       choice = gets.chomp.to_i
-      new_piece = case choice
-                  when 1
-                    Queen
-                  when 2
-                    Rook
-                  when 3
-                    Bishop
-                  when 4
-                    Knight
-                  else
-                    next
-                  end.new(color: current_player.color, square: board.square_at(move))
-      board.place(new_piece, move)
-      break
+      type = interpret_choice(choice)
     end
+    type
+  end
+
+  def interpret_choice(choice)
+    case choice
+    when 1
+      Queen
+    when 2
+      Rook
+    when 3
+      Bishop
+    when 4
+      Knight
+    end
+  end
+
+  def promotion_prompt
+    puts 'Please select a replacement piece: (1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight)'
   end
 
   def check_move_errors
@@ -119,8 +157,6 @@ class Game
   end
 
   def check_start_errors
-    return if start == 'save'
-
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
                  check_own_piece_at(start) ||
@@ -136,7 +172,7 @@ class Game
   end
 
   def check_valid_move(input)
-    invalid_move_error unless board.valid_move?(input) || move == start
+    invalid_move_error unless board.valid_move?(input)
   end
 
   def check_valid_format(input)

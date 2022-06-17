@@ -2,7 +2,39 @@ require './lib/Pieces/piece'
 
 class Knight < Piece
   def moves
-    [[[1, 2]], [[2, 1]], [[2, -1]], [[1, -2]], [[-1, -2]], [[-2, -1]], [[-2, 1]], [[-1, 2]]]
+    [[nne], [ene], [ese], [sse], [ssw], [wsw], [wnw], [nnw]]
+  end
+
+  def nne
+    [1, 2]
+  end
+
+  def ene
+    [2, 1]
+  end
+
+  def ese
+    [2, -1]
+  end
+
+  def sse
+    [1, -2]
+  end
+
+  def ssw
+    [-1, -2]
+  end
+
+  def wsw
+    [-2, -1]
+  end
+
+  def wnw
+    [-2, 1]
+  end
+
+  def nnw
+    [-1, 2]
   end
 
   def color_white
