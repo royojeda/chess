@@ -5,6 +5,8 @@ class Knight < Piece
     [[nne], [ene], [ese], [sse], [ssw], [wsw], [wnw], [nnw]]
   end
 
+  private
+
   def nne
     [1, 2]
   end

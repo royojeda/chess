@@ -2,7 +2,7 @@ class Piece
   attr_reader :color
   attr_accessor :square, :previous, :first_move
 
-  def initialize(color:, square:, previous: nil, first_move: true)
+  def initialize(color:, square: nil, previous: nil, first_move: true)
     @color = color
     @square = square
     @previous = previous
