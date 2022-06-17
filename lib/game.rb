@@ -60,7 +60,7 @@ class Game
 
       show_moves_from_start
       select_move
-      break if move != start
+      break unless changed_mind?
 
       self.board = Marshal.load(board_save)
     end
@@ -76,10 +76,8 @@ class Game
     loop do
       display
       select_piece
-      return if save?
-
-      check_start_errors
-      break if valid_input?
+      check_start_errors unless save?
+      break if save? || valid_input?
     end
   end
 
@@ -91,9 +89,13 @@ class Game
     loop do
       display
       choose_destination
-      check_move_errors
-      break if valid_input?
+      check_move_errors unless changed_mind?
+      break if changed_mind? || valid_input?
     end
+  end
+
+  def changed_mind?
+    move == start
   end
 
   def execute_move
@@ -170,7 +172,7 @@ class Game
   end
 
   def check_valid_move(input)
-    invalid_move_error unless board.valid_move?(input) || move == start
+    invalid_move_error unless board.valid_move?(input)
   end
 
   def check_valid_format(input)
