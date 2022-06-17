@@ -7,6 +7,10 @@ module Notices
     'Stalemate! The game ends in a draw.'
   end
 
+  def check_notice
+    'Check!'
+  end
+
   def no_moves_error
     'That piece has no valid moves for this turn.'
   end
