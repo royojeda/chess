@@ -81,14 +81,6 @@ class Board
     arr
   end
 
-  def checkmate?(color)
-    check?(color) && all_own_moves(color).empty?
-  end
-
-  def stalemate?(color)
-    !check?(color) && all_own_moves(color).empty?
-  end
-
   def check?(color)
     all_enemy_moves(color).include?(square_of_own_king(color))
   end

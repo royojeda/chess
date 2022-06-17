@@ -25,23 +25,39 @@ class Game
   end
 
   def over?
-    if board.checkmate?(current_player.color)
-      self.error = "Checkmate! #{players[1].color.capitalize} wins!"
-    elsif board.stalemate?(current_player.color)
-      self.error = 'Stalemate! The game ends in a draw.'
-    end
+    return false unless no_valid_moves_for?(current_player)
+
+    check?(current_player) ? checkmate : stalemate
+  end
+
+  def no_valid_moves_for?(player)
+    board.all_own_moves(player.color).empty?
+  end
+
+  def check?(player)
+    board.check?(player.color)
+  end
+
+  def checkmate
+    self.error = "Checkmate! #{players[1].color.capitalize} wins!"
+  end
+
+  def stalemate
+    self.error = 'Stalemate! The game ends in a draw.'
   end
 
   def turn
     check_check
+    board_save = Marshal.dump(board)
     loop do
-      save = Marshal.dump(board)
       select_start
       return if start == 'save'.chars
 
       show_moves_from_start
-      select_move(save)
+      select_move(board_save)
       break if move != start
+
+      self.board = Marshal.load(board_save)
     end
     execute_move
     switch_players
@@ -62,12 +78,11 @@ class Game
     board.show_moves_from(start)
   end
 
-  def select_move(save)
+  def select_move(board_save)
     loop do
       display
       choose_destination
       check_move_errors
-      self.board = Marshal.load(save) if move == start
       break if valid_input?
     end
   end
@@ -119,8 +134,6 @@ class Game
   end
 
   def check_start_errors
-    return if start == 'save'
-
     self.error = check_valid_format(start) ||
                  check_empty_square_at(start) ||
                  check_own_piece_at(start) ||
