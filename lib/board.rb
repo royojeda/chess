@@ -97,7 +97,7 @@ class Board
 
   def allows_en_passant_by?(attacker, side)
     location = attacker.location
-    location[0] = (location[0].ord + side).chr
+    location[0] = (file(location).ord + side).chr
     enemy_pawn_at?(attacker.color, location) &&
       chance_not_passed(location) &&
       piece_at(location).previous_is_two_forward?
@@ -134,8 +134,8 @@ class Board
   end
 
   def rook_castle_move(move)
-    rank = move[1]
-    king_end_file = move[0]
+    rank = rank(move)
+    king_end_file = file(move)
     if king_end_file == 'g'
       file_of_rook_to_move = 'h'
       rook_end_file = 'f'
@@ -209,11 +209,17 @@ class Board
     result
   end
 
+  def file(location)
+    location[0]
+  end
+
+  def rank(location)
+    location[1]
+  end
+
   def valid_move?(location)
-    file = location[0]
-    rank = location[1]
     valid_moves.any? do |move|
-      move.file == file && move.rank == rank
+      move.file == file(location) && move.rank == rank(location)
     end
   end
 
@@ -235,9 +241,9 @@ class Board
   end
 
   def square_at(location)
-    file = location[0]
-    rank = location[1]
-    squares.find { |square| square.rank == rank && square.file == file }
+    squares.find do |square|
+      square.file == file(location) && square.rank == rank(location)
+    end
   end
 
   def display
