@@ -4,31 +4,21 @@ require './lib/Modules/movable'
 class Pawn < Piece
   include Movable
 
-  def previous_is_two_forward?
-    square.rank == (previous.rank.ord + 2).chr ||
-      square.rank == (previous.rank.ord - 2).chr
+  def special_allowed?(special, board)
+    board.enemy_piece_at?(color, destination_from(special)) ||
+      board.allows_en_passant_by?(self, special[0])
   end
 
-  def all_destinations(board)
-    arr = []
+  def specials
+    captures
+  end
 
-    moves.each do |direction|
-      direction.each do |move|
-        destination = destination_from(move)
-        break if board.out_of_bounds?(destination) ||
-                 !board.square_at(destination).empty?
+  def stop_before?(board, destination)
+    board.out_of_bounds?(destination) || !board.square_at(destination).empty?
+  end
 
-        arr << destination
-      end
-    end
-
-    captures.each do |capture|
-      destination = destination_from(capture)
-      arr << destination if board.enemy_piece_at?(color, destination) ||
-                            board.allows_en_passant_by?(self, capture[0])
-    end
-
-    arr
+  def stop_after?(_board, _destination)
+    false
   end
 
   def moves
