@@ -123,9 +123,7 @@ class Board
   def move(start, move)
     source = square_at(start)
     destination = square_at(move)
-    source.store_as_previous
-    destination.update_occupant(source)
-    source.remove_occupant
+    core_move(source, destination)
     square_behind(destination).remove_occupant if en_passant?(source, destination)
     self.last_piece_to_move = destination.occupant
     squares.each(&:highlight_none)
@@ -133,23 +131,30 @@ class Board
     destination.highlight_blue
   end
 
-  def rook_castle_move(move)
-    rank = rank(move)
-    king_end_file = file(move)
-    if king_end_file == 'g'
-      file_of_rook_to_move = 'h'
-      rook_end_file = 'f'
-    else
-      file_of_rook_to_move = 'a'
-      rook_end_file = 'd'
-    end
-    start = [file_of_rook_to_move, rank]
-    fin = [rook_end_file, rank]
-    source = square_at(start)
-    destination = square_at(fin)
+  def core_move(source, destination)
     source.store_as_previous
     destination.update_occupant(source)
     source.remove_occupant
+  end
+
+  def rook_castle_move(move)
+    start = [rook_start_file(move), rank(move)]
+    fin = [rook_end_file(move), rank(move)]
+    source = square_at(start)
+    destination = square_at(fin)
+    core_move(source, destination)
+  end
+
+  def rook_start_file(move)
+    right_side_castle?(move) ? 'h' : 'a'
+  end
+
+  def rook_end_file(move)
+    right_side_castle?(move) ? 'f' : 'd'
+  end
+
+  def right_side_castle?(move)
+    file(move) == 'g'
   end
 
   def castle?(start, move)
