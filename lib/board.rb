@@ -116,8 +116,8 @@ class Board
     right_side_castle?(move) ? 'f' : 'd'
   end
 
-  def place(piece, move)
-    square_at(move).place(piece)
+  def place(piece, location)
+    square_at(location).place(piece)
   end
 
   def square_behind(square)
