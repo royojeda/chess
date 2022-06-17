@@ -1,19 +1,22 @@
 require './lib/board'
 require './lib/player'
+require './lib/Modules/promotion'
 
 class Game
+  include Promotion
+
   attr_reader :players
-  attr_accessor :error, :start, :move, :board
+  attr_accessor :notice, :start, :move, :board
 
   def initialize(board: Board.new,
                  players: [Player.new(color: 'white'),
                            Player.new(color: 'black')],
-                 error: nil,
+                 notice: nil,
                  start: nil,
                  move: nil)
     @board = board
     @players = players
-    @error = error
+    @notice = notice
     @start = start
     @move = move
   end
@@ -44,13 +47,14 @@ class Game
   end
 
   def checkmate
-    self.error = "Checkmate! #{players[1].color.capitalize} wins!"
+    self.notice = "Checkmate! #{players[1].color.capitalize} wins!"
   end
 
   def stalemate
-    self.error = 'Stalemate! The game ends in a draw.'
+    self.notice = 'Stalemate! The game ends in a draw.'
   end
 
+  # rubocop:disable Metrics/MethodLength
   def turn
     check_check
     board_save = Marshal.dump(board)
@@ -67,6 +71,7 @@ class Game
     execute_move
     switch_players
   end
+  # rubocop:enable Metrics/MethodLength
 
   def save?
     start == 'save'.chars
@@ -104,44 +109,9 @@ class Game
     board.rook_castle_move(move) if board.castle?(start, move)
   end
 
-  def promote
-    self.error = 'Pawn promotion!'
-    type = choose_replacement
-    new_piece = type.new(color: current_player.color, square: board.square_at(move))
-    board.place(new_piece, move)
-    self.error = nil
-  end
-
-  def choose_replacement(type = nil)
-    while type.nil?
-      display
-      promotion_prompt
-      choice = gets.chomp.to_i
-      type = interpret_choice(choice)
-    end
-    type
-  end
-
-  def interpret_choice(choice)
-    case choice
-    when 1
-      Queen
-    when 2
-      Rook
-    when 3
-      Bishop
-    when 4
-      Knight
-    end
-  end
-
-  def promotion_prompt
-    puts 'Please select a replacement piece: (1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight)'
-  end
-
   def check_move_errors
-    self.error = check_valid_format(move) ||
-                 check_valid_move(move)
+    self.notice = check_valid_format(move) ||
+                  check_valid_move(move)
   end
 
   def choose_destination
@@ -149,7 +119,7 @@ class Game
   end
 
   def valid_input?
-    error.nil?
+    notice.nil?
   end
 
   def select_piece
@@ -157,10 +127,10 @@ class Game
   end
 
   def check_start_errors
-    self.error = check_valid_format(start) ||
-                 check_empty_square_at(start) ||
-                 check_own_piece_at(start) ||
-                 check_no_moves(start)
+    self.notice = check_valid_format(start) ||
+                  check_empty_square_at(start) ||
+                  check_own_piece_at(start) ||
+                  check_no_moves(start)
   end
 
   def check_no_moves(input)
@@ -168,7 +138,7 @@ class Game
   end
 
   def check_check
-    self.error = 'Check!' if board.check?(current_player.color)
+    self.notice = 'Check!' if board.check?(current_player.color)
   end
 
   def check_valid_move(input)
@@ -223,7 +193,7 @@ class Game
 
   def display
     system 'clear'
-    puts error
+    puts notice
     puts
     board.display
     puts
