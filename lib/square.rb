@@ -4,8 +4,11 @@ require './lib/Pieces/knight'
 require './lib/Pieces/bishop'
 require './lib/Pieces/queen'
 require './lib/Pieces/king'
+require './lib/Modules/square_predicates'
 
 class Square
+  include SquarePredicates
+
   attr_reader :rank, :file, :color
   attr_accessor :status, :occupant
 
@@ -19,34 +22,6 @@ class Square
 
   def place(piece)
     self.occupant = piece
-  end
-
-  def can_castle?(color)
-    contains_own_rook?(color) && occupant.first_move
-  end
-
-  def contains_own_rook?(color)
-    own_piece?(color) && contains_rook?
-  end
-
-  def contains_rook?
-    occupant.is_a?(Rook)
-  end
-
-  def contains_own_king?(color)
-    own_piece?(color) && contains_king?
-  end
-
-  def contains_king?
-    occupant.is_a?(King)
-  end
-
-  def contains_pawn?
-    occupant.is_a?(Pawn)
-  end
-
-  def contains_enemy_pawn?(color)
-    enemy_piece?(color) && contains_pawn?
   end
 
   def store_as_previous
@@ -67,16 +42,8 @@ class Square
     occupant.moved
   end
 
-  def promotable?
-    contains_pawn? && on_last_rank?
-  end
-
   def last_rank
     occupant.color == 'white' ? '8' : '1'
-  end
-
-  def on_last_rank?
-    rank == last_rank
   end
 
   def highlight_blue
@@ -87,24 +54,8 @@ class Square
     self.status = 'green'
   end
 
-  def own_piece?(color)
-    !empty? && owned_by?(color)
-  end
-
-  def enemy_piece?(color)
-    !empty? && !owned_by?(color)
-  end
-
   def all_destinations(board)
     occupant.all_destinations(board)
-  end
-
-  def empty?
-    occupant == ' '
-  end
-
-  def owned_by?(color)
-    occupant.color == color
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -157,14 +108,6 @@ class Square
 
   def color_light
     'light'
-  end
-
-  def file_and_rank_odd?
-    file.ord.odd? && rank.to_i.odd?
-  end
-
-  def file_and_rank_even?
-    file.ord.even? && rank.to_i.even?
   end
 
   def to_s
