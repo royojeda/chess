@@ -14,10 +14,6 @@ module BoardPredicates
     all_enemy_moves(color).include?(square_at(location))
   end
 
-  def check?(color)
-    all_enemy_moves(color).include?(square_of_own_king(color))
-  end
-
   def out_of_bounds?(location)
     square_at(location).nil?
   end
