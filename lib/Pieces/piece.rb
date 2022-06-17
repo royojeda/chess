@@ -2,11 +2,11 @@ class Piece
   attr_reader :color
   attr_accessor :square, :previous, :first_move
 
-  def initialize(**opts)
-    @color = opts[:color]
-    @square = opts[:square]
-    @previous = nil
-    @first_move = true
+  def initialize(color:, square:, previous: nil, first_move: true)
+    @color = color
+    @square = square
+    @previous = previous
+    @first_move = first_move
   end
 
   def location
