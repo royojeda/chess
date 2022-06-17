@@ -54,7 +54,7 @@ class Game
       return if start == 'save'.chars
 
       show_moves_from_start
-      select_move(board_save)
+      select_move
       break if move != start
 
       self.board = Marshal.load(board_save)
@@ -78,7 +78,7 @@ class Game
     board.show_moves_from(start)
   end
 
-  def select_move(board_save)
+  def select_move
     loop do
       display
       choose_destination
