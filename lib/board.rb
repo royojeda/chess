@@ -53,11 +53,8 @@ class Board
   end
 
   def all_enemy_moves(color)
-    other_player_squares = squares.select do |square|
-      square.enemy_piece?(color)
-    end
     arr = []
-    other_player_squares.each do |square|
+    enemy_squares(color).each do |square|
       next if square.contains_king?
 
       destinations = square.all_destinations(self)
@@ -67,11 +64,8 @@ class Board
   end
 
   def all_own_moves(color)
-    current_player_squares = squares.select do |square|
-      square.own_piece?(color)
-    end
     arr = []
-    current_player_squares.each do |square|
+    own_squares(color).each do |square|
       destinations = square.all_destinations(self).compact
       valids = destinations.select do |move|
         no_check_after?([square.file, square.rank], move)
@@ -79,6 +73,18 @@ class Board
       arr.concat(squares_at(valids))
     end
     arr
+  end
+
+  def enemy_squares(color)
+    squares.select do |square|
+      square.enemy_piece?(color)
+    end
+  end
+
+  def own_squares(color)
+    squares.select do |square|
+      square.own_piece?(color)
+    end
   end
 
   def check?(color)
