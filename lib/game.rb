@@ -56,7 +56,7 @@ class Game
     board_save = Marshal.dump(board)
     loop do
       select_start
-      return if start == 'save'.chars
+      return if save?
 
       show_moves_from_start
       select_move
@@ -68,11 +68,15 @@ class Game
     switch_players
   end
 
+  def save?
+    start == 'save'.chars
+  end
+
   def select_start
     loop do
       display
       select_piece
-      return if start == 'save'.chars
+      return if save?
 
       check_start_errors
       break if valid_input?
