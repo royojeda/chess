@@ -112,10 +112,10 @@ class Square
     case rank
     when '1'
       create_non_pawn('white')
-    when '2'
-      create_pawn('white')
-    when '7'
-      create_pawn('black')
+    # when '2'
+    #   create_pawn('white')
+    # when '7'
+    #   create_pawn('black')
     when '8'
       create_non_pawn('black')
     else

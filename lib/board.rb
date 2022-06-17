@@ -120,6 +120,18 @@ class Board
     square_at(location).can_castle?(color)
   end
 
+  def all_empty?(locations)
+    locations.all? do |location|
+      empty_at?(location)
+    end
+  end
+
+  def none_attacked?(color, locations)
+    locations.none? do |location|
+      attacked?(color, location)
+    end
+  end
+
   def move(start, move)
     source = square_at(start)
     destination = square_at(move)

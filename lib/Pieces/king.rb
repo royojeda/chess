@@ -18,24 +18,40 @@ class King < Piece
   end
 
   def special_allowed?(special, board)
-    destination = destination_from(special)
-    if destination[0] > square.file
-      locations_in_king_path = [first_right] + [second_right]
-      locations_between_king_and_rook = locations_in_king_path
-      rook_square = third_right
+    move = destination_from(special)
+    first_move &&
+      !board.check?(color) &&
+      board.all_empty?(locations_between_king_and_rook(move)) &&
+      board.none_attacked?(color, locations_in_king_path(move)) &&
+      board.can_castle?(color, rook_square(move))
+  end
+
+  def right_side_castle?(move)
+    move[0] == 'g'
+  end
+
+  def locations_in_king_path(move)
+    if right_side_castle?(move)
+      [first_right] + [second_right]
     else
-      locations_in_king_path = [first_left] + [second_left]
-      locations_between_king_and_rook = locations_in_king_path + [third_left]
-      rook_square = fourth_left
+      [first_left] + [second_left]
     end
-    !board.check?(color) && first_move &&
-      locations_between_king_and_rook.all? do |location|
-        board.empty_at?(location)
-      end &&
-      locations_in_king_path.none? do |location|
-        board.attacked?(color, location)
-      end &&
-      board.can_castle?(color, rook_square)
+  end
+
+  def rook_square(move)
+    if right_side_castle?(move)
+      third_right
+    else
+      fourth_left
+    end
+  end
+
+  def locations_between_king_and_rook(move)
+    if right_side_castle?(move)
+      locations_in_king_path(move)
+    else
+      locations_in_king_path(move) + [third_left]
+    end
   end
 
   def first_right
