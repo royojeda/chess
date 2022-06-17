@@ -4,12 +4,14 @@ require './lib/Modules/promotion'
 require './lib/Modules/notices'
 require './lib/Modules/input_checker'
 require './lib/Modules/turn_actions'
+require './lib/Modules/end_conditions'
 
 class Game
   include Promotion
   include Notices
   include InputChecker
   include TurnActions
+  include EndConditions
 
   attr_reader :players
   attr_accessor :notice, :start, :move, :board
@@ -36,24 +38,6 @@ class Game
     end
     display
     false
-  end
-
-  def over?
-    return false unless no_valid_moves_for?(current_player)
-
-    check?(current_player) ? checkmate : stalemate
-  end
-
-  def checkmate
-    self.notice = checkmate_notice
-  end
-
-  def stalemate
-    self.notice = stalemate_notice
-  end
-
-  def no_valid_moves_for?(player)
-    board.all_own_moves(player.color).empty?
   end
 
   # rubocop:disable Metrics/MethodLength
