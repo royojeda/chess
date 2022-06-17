@@ -5,12 +5,17 @@ class Game
   attr_reader :players
   attr_accessor :error, :start, :move, :board
 
-  def initialize
-    @board = Board.new
-    @error = nil
-    @start = nil
-    @move = nil
-    @players = [Player.new(color: 'white'), Player.new(color: 'black')]
+  def initialize(board: Board.new,
+                 players: [Player.new(color: 'white'),
+                           Player.new(color: 'black')],
+                 error: nil,
+                 start: nil,
+                 move: nil)
+    @board = board
+    @players = players
+    @error = error
+    @start = start
+    @move = move
   end
 
   def play
