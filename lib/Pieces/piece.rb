@@ -22,17 +22,38 @@ class Piece
     moves.each do |direction|
       direction.each do |move|
         destination = destination_from(move)
-        break if board.out_of_bounds?(destination) ||
-                 board.own_piece_at?(color, destination)
+        break if stop_before?(board, destination)
 
         arr << destination
-        break if board.enemy_piece_at?(color, destination)
+        break if stop_after?(board, destination)
       end
     end
-    arr
+    arr + special_moves(board)
   end
 
-  def previous_is_two_forward?; end
+  def special_moves(board)
+    valid_specials = specials.select do |special|
+      special_allowed?(special, board)
+    end
+    valid_specials.map { |special| destination_from(special) }
+  end
+
+  def specials
+    []
+  end
+
+  def stop_before?(board, destination)
+    board.out_of_bounds?(destination) || board.own_piece_at?(color, destination)
+  end
+
+  def stop_after?(board, destination)
+    board.enemy_piece_at?(color, destination)
+  end
+
+  def previous_is_two_forward?
+    square.rank == (previous.rank.ord + 2).chr ||
+      square.rank == (previous.rank.ord - 2).chr
+  end
 
   def destination_from(move)
     [destination_file(move[0]), destination_rank(move[1])]

@@ -13,18 +13,12 @@ class King < Piece
     1
   end
 
-  def all_destinations(board)
-    arr = super
-
-    castles.each do |castle|
-      destination = destination_from(castle)
-      arr << destination if valid_castle?(destination, board)
-    end
-
-    arr
+  def specials
+    castles
   end
 
-  def valid_castle?(destination, board)
+  def special_allowed?(special, board)
+    destination = destination_from(special)
     if destination[0] > square.file
       locations_in_king_path = [first_right] + [second_right]
       locations_between_king_and_rook = locations_in_king_path
