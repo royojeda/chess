@@ -5,9 +5,11 @@ require './lib/Pieces/bishop'
 require './lib/Pieces/queen'
 require './lib/Pieces/king'
 require './lib/Modules/square_predicates'
+require './lib/Modules/square_colors'
 
 class Square
   include SquarePredicates
+  include SquareColors
 
   attr_reader :rank, :file, :color
   attr_accessor :status, :occupant
@@ -28,10 +30,6 @@ class Square
     occupant.previous = self
   end
 
-  def highlight_none
-    self.status = ''
-  end
-
   def remove_occupant
     self.occupant = ' '
   end
@@ -44,14 +42,6 @@ class Square
 
   def last_rank
     occupant.color == 'white' ? '8' : '1'
-  end
-
-  def highlight_blue
-    self.status = 'blue'
-  end
-
-  def highlight_green
-    self.status = 'green'
   end
 
   def all_destinations(board)
@@ -94,63 +84,7 @@ class Square
     Pawn.new(color:, square: self)
   end
 
-  def determine_color
-    if file_and_rank_odd? || file_and_rank_even?
-      color_dark
-    else
-      color_light
-    end
-  end
-
-  def color_dark
-    'dark'
-  end
-
-  def color_light
-    'light'
-  end
-
   def to_s
     "\e[38;5;#{font_color};48;5;#{background_color}m#{occupant} \e[0m"
-  end
-
-  def font_color
-    16
-  end
-
-  def background_color
-    case status
-    when 'blue'
-      background_blue
-    when 'green'
-      background_green
-    else
-      normal_color
-    end
-  end
-
-  def normal_color
-    case color
-    when 'light'
-      background_light
-    when 'dark'
-      background_dark
-    end
-  end
-
-  def background_blue
-    81
-  end
-
-  def background_green
-    84
-  end
-
-  def background_light
-    223
-  end
-
-  def background_dark
-    3
   end
 end
