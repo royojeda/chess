@@ -203,7 +203,7 @@ class Board
     source.remove_occupant
     square_behind(fin).remove_occupant if en_passant?(source, fin)
 
-    color = square_at(destination).occupant.color
+    color = piece_at(destination).color
     result = !check?(color)
     self.squares = Marshal.load(save_squares)
     result
