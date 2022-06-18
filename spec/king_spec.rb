@@ -9,4 +9,13 @@ describe King do
       expect(move_king.moves.sort).to eq(expected)
     end
   end
+
+  describe '#specials' do
+    subject(:special_king) { described_class.new(color: 'white') }
+
+    it 'returns the castling moves' do
+      expected = [[2, 0], [-2, 0]].sort
+      expect(special_king.specials.sort).to eq(expected)
+    end
+  end
 end
