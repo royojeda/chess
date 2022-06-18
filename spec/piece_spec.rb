@@ -120,5 +120,17 @@ describe Piece do
         expect(destination_piece.all_destinations(test_board)).to eq(expected)
       end
     end
+
+    context "when the piece's first move is blocked by an allied piece" do
+      before do
+        allow(destination_piece).to receive(:stop_before?).and_return(true, false, false)
+        allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
+      end
+
+      it 'returns an empty array' do
+        expected = []
+        expect(destination_piece.all_destinations(test_board)).to eq(expected)
+      end
+    end
   end
 end
