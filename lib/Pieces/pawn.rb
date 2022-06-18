@@ -4,13 +4,17 @@ require './lib/Modules/movable'
 class Pawn < Piece
   include Movable
 
-  def special_allowed?(special, board)
-    board.enemy_piece_at?(color, destination_from(special)) ||
-      board.allows_en_passant_by?(self, special[0])
+  def moves
+    first_move ? two_forward : one_forward
   end
 
   def specials
     captures
+  end
+
+  def special_allowed?(special, board)
+    board.enemy_piece_at?(color, destination_from(special)) ||
+      board.allows_en_passant_by?(self, special[0])
   end
 
   def stop_before?(board, destination)
@@ -21,9 +25,7 @@ class Pawn < Piece
     false
   end
 
-  def moves
-    first_move ? two_forward : one_forward
-  end
+  private
 
   def captures
     front_left + front_right
