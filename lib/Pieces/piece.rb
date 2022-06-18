@@ -38,6 +38,8 @@ class Piece
 
   private
 
+  def moves; end
+
   def special_moves(board)
     valid_specials = specials.select do |special|
       special_allowed?(special, board)

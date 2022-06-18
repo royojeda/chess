@@ -1,5 +1,6 @@
 require './lib/Pieces/piece'
 require './lib/square'
+require './lib/board'
 
 describe Piece do
   describe '#moved' do
@@ -60,6 +61,40 @@ describe Piece do
 
       it 'returns false' do
         expect(previous_piece.previous_is_two_forward?).to be(false)
+      end
+    end
+  end
+
+  describe '#all_destinations' do
+    subject(:destination_piece) { described_class.new(color: 'white', square: test_square) }
+
+    let(:test_board) { instance_double(Board) }
+    let(:test_square) { instance_double(Square, file: 'c', rank: '3') }
+
+    before do
+      moves = [[[0, 1], [0, 2], [0, 3]]]
+      allow(destination_piece).to receive(:moves).and_return(moves)
+    end
+
+    context "when the piece's moves are not blocked by any other piece" do
+      let(:test_destination_one) { instance_double(Square, file: 'd', rank: '3') }
+      let(:test_destination_two) { instance_double(Square, file: 'e', rank: '3') }
+      let(:test_destination_three) { instance_double(Square, file: 'f', rank: '3') }
+
+      before do
+        move_one = [0, 1]
+        move_two = [0, 2]
+        move_three = [0, 3]
+        allow(destination_piece).to receive(:destination_from).with(move_one).and_return(test_destination_one)
+        allow(destination_piece).to receive(:destination_from).with(move_two).and_return(test_destination_two)
+        allow(destination_piece).to receive(:destination_from).with(move_three).and_return(test_destination_three)
+        allow(destination_piece).to receive(:stop_before?).and_return(false, false, false)
+        allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
+      end
+
+      it "returns an array of squares corresponding to each move's destination from the current square" do
+        expected = [test_destination_one, test_destination_two, test_destination_three]
+        expect(destination_piece.all_destinations(test_board)).to eq(expected)
       end
     end
   end
