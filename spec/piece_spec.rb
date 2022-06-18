@@ -32,4 +32,35 @@ describe Piece do
       end
     end
   end
+
+  describe '#previous_is_two_forward?' do
+    subject(:previous_piece) { described_class.new(color: 'white', square: test_square, previous: test_previous) }
+
+    context "when the piece's square's rank is two greater than its previous square's rank" do
+      let(:test_square) { instance_double(Square, file: 'd', rank: '5') }
+      let(:test_previous) { instance_double(Square, file: 'd', rank: '3') }
+
+      it 'returns true' do
+        expect(previous_piece.previous_is_two_forward?).to be(true)
+      end
+    end
+
+    context "when the piece's square's rank is two less than its previous square's rank" do
+      let(:test_square) { instance_double(Square, file: 'd', rank: '1') }
+      let(:test_previous) { instance_double(Square, file: 'd', rank: '3') }
+
+      it 'returns true' do
+        expect(previous_piece.previous_is_two_forward?).to be(true)
+      end
+    end
+
+    context "when the piece's square's rank is neither two less than nor two greater than its previous square's rank" do
+      let(:test_square) { instance_double(Square, file: 'd', rank: '7') }
+      let(:test_previous) { instance_double(Square, file: 'd', rank: '3') }
+
+      it 'returns false' do
+        expect(previous_piece.previous_is_two_forward?).to be(false)
+      end
+    end
+  end
 end
