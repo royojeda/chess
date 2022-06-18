@@ -29,4 +29,62 @@ describe Pawn do
       end
     end
   end
+
+  describe '#special_allowed?' do
+    subject(:allowed_pawn) { described_class.new(color: 'white') }
+
+    let(:test_board) { instance_double(Board) }
+
+    before do
+      allow(allowed_pawn).to receive(:destination_from)
+    end
+
+    context 'when there is an enemy piece diagonally forward one square to the left' do
+      before do
+        allow(test_board).to receive(:enemy_piece_at?).and_return(true)
+        allow(test_board).to receive(:allows_en_passant_by?).and_return(false)
+      end
+
+      it 'returns true for the front-left capture' do
+        capture = [-1, 1]
+        expect(allowed_pawn.special_allowed?(capture, test_board)).to be(true)
+      end
+    end
+
+    context 'when there is an enemy piece diagonally forward one square to the right' do
+      before do
+        allow(test_board).to receive(:enemy_piece_at?).and_return(true)
+        allow(test_board).to receive(:allows_en_passant_by?).and_return(false)
+      end
+
+      it 'returns true for the front-right capture' do
+        capture = [1, 1]
+        expect(allowed_pawn.special_allowed?(capture, test_board)).to be(true)
+      end
+    end
+
+    context 'when the left-side en passant conditions are met' do
+      before do
+        allow(test_board).to receive(:enemy_piece_at?).and_return(false)
+        allow(test_board).to receive(:allows_en_passant_by?).with(allowed_pawn, -1).and_return(true)
+      end
+
+      it 'returns true for the front-left capture' do
+        capture = [-1, 1]
+        expect(allowed_pawn.special_allowed?(capture, test_board)).to be(true)
+      end
+    end
+
+    context 'when the right-side en passant conditions are met' do
+      before do
+        allow(test_board).to receive(:enemy_piece_at?).and_return(false)
+        allow(test_board).to receive(:allows_en_passant_by?).with(allowed_pawn, 1).and_return(true)
+      end
+
+      it 'returns true for the front-right capture' do
+        capture = [1, 1]
+        expect(allowed_pawn.special_allowed?(capture, test_board)).to be(true)
+      end
+    end
+  end
 end
