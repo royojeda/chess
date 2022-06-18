@@ -70,30 +70,41 @@ describe Piece do
 
     let(:test_board) { instance_double(Board) }
     let(:test_square) { instance_double(Square, file: 'c', rank: '3') }
+    let(:test_destination_one) { instance_double(Square, file: 'd', rank: '3') }
+    let(:test_destination_two) { instance_double(Square, file: 'e', rank: '3') }
+    let(:test_destination_three) { instance_double(Square, file: 'f', rank: '3') }
 
     before do
-      moves = [[[0, 1], [0, 2], [0, 3]]]
+      move_one = [0, 1]
+      move_two = [0, 2]
+      move_three = [0, 3]
+      moves = [[move_one, move_two, move_three]]
       allow(destination_piece).to receive(:moves).and_return(moves)
+      allow(destination_piece).to receive(:destination_from).with(move_one).and_return(test_destination_one)
+      allow(destination_piece).to receive(:destination_from).with(move_two).and_return(test_destination_two)
+      allow(destination_piece).to receive(:destination_from).with(move_three).and_return(test_destination_three)
     end
 
     context "when the piece's moves are not blocked by any other piece" do
-      let(:test_destination_one) { instance_double(Square, file: 'd', rank: '3') }
-      let(:test_destination_two) { instance_double(Square, file: 'e', rank: '3') }
-      let(:test_destination_three) { instance_double(Square, file: 'f', rank: '3') }
-
       before do
-        move_one = [0, 1]
-        move_two = [0, 2]
-        move_three = [0, 3]
-        allow(destination_piece).to receive(:destination_from).with(move_one).and_return(test_destination_one)
-        allow(destination_piece).to receive(:destination_from).with(move_two).and_return(test_destination_two)
-        allow(destination_piece).to receive(:destination_from).with(move_three).and_return(test_destination_three)
         allow(destination_piece).to receive(:stop_before?).and_return(false, false, false)
         allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
       end
 
       it "returns an array of squares corresponding to each move's destination from the current square" do
         expected = [test_destination_one, test_destination_two, test_destination_three]
+        expect(destination_piece.all_destinations(test_board)).to eq(expected)
+      end
+    end
+
+    context "when the piece's second move is blocked by an allied piece" do
+      before do
+        allow(destination_piece).to receive(:stop_before?).and_return(false, true, false)
+        allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
+      end
+
+      it "returns an array of squares corresponding to each move's destination from the current square" do
+        expected = [test_destination_one]
         expect(destination_piece.all_destinations(test_board)).to eq(expected)
       end
     end
