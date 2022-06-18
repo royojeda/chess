@@ -91,7 +91,7 @@ describe Piece do
         allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
       end
 
-      it "returns an array of squares corresponding to each move's destination from the current square" do
+      it 'returns an array with all destinations' do
         expected = [test_destination_one, test_destination_two, test_destination_three]
         expect(destination_piece.all_destinations(test_board)).to eq(expected)
       end
@@ -103,8 +103,20 @@ describe Piece do
         allow(destination_piece).to receive(:stop_after?).and_return(false, false, false)
       end
 
-      it "returns an array of squares corresponding to each move's destination from the current square" do
+      it 'returns an array with the first destination' do
         expected = [test_destination_one]
+        expect(destination_piece.all_destinations(test_board)).to eq(expected)
+      end
+    end
+
+    context "when the piece's second move is blocked by an enemy piece" do
+      before do
+        allow(destination_piece).to receive(:stop_before?).and_return(false, false, false)
+        allow(destination_piece).to receive(:stop_after?).and_return(false, true, false)
+      end
+
+      it 'returns an array with the first and second destinations' do
+        expected = [test_destination_one, test_destination_two]
         expect(destination_piece.all_destinations(test_board)).to eq(expected)
       end
     end
