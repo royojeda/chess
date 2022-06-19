@@ -127,4 +127,22 @@ describe Board do
       expect(test_destination_two).to have_received(:highlight_green)
     end
   end
+
+  describe '#square_at' do
+    subject(:square_at_board) { described_class.new }
+
+    context 'when the given location is c5' do
+      it 'returns the square at c5' do
+        location = %w[c 5]
+        expect([square_at_board.square_at(location).file, square_at_board.square_at(location).rank]).to eq(location)
+      end
+    end
+
+    context 'when the given location is e7' do
+      it 'returns the square at e7' do
+        location = %w[e 7]
+        expect([square_at_board.square_at(location).file, square_at_board.square_at(location).rank]).to eq(location)
+      end
+    end
+  end
 end
