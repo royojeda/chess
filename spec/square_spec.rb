@@ -250,4 +250,36 @@ describe Square do
       end
     end
   end
+
+  describe '#enemy_piece?' do
+    subject(:enemy_square) { described_class.new(file: 'a', rank: '1') }
+
+    before do
+      allow(enemy_square).to receive(:occupant).and_return(test_occupant)
+    end
+
+    context 'when @occupant is a piece not of the same color as the argument' do
+      let(:test_occupant) { instance_double(Pawn, color: 'black') }
+
+      it 'returns true' do
+        expect(enemy_square.enemy_piece?('white')).to be(true)
+      end
+    end
+
+    context 'when @occupant is a piece of the same color as the argument' do
+      let(:test_occupant) { instance_double(Pawn, color: 'white') }
+
+      it 'returns false' do
+        expect(enemy_square.enemy_piece?('white')).to be(false)
+      end
+    end
+
+    context "when @occupant is ' '(represents an empty square)" do
+      let(:test_occupant) { ' ' }
+
+      it 'returns false' do
+        expect(enemy_square.enemy_piece?('white')).to be(false)
+      end
+    end
+  end
 end
