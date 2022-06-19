@@ -145,4 +145,22 @@ describe Board do
       end
     end
   end
+
+  describe '#out_of_bounds?' do
+    subject(:bounds_board) { described_class.new }
+
+    context 'when the given location is not in a standard chess board' do
+      it 'returns true' do
+        location = %w[e 9]
+        expect(bounds_board.out_of_bounds?(location)).to be(true)
+      end
+    end
+
+    context 'when the given location is in a standard chess board' do
+      it 'returns false' do
+        location = %w[c 5]
+        expect(bounds_board.out_of_bounds?(location)).to be(false)
+      end
+    end
+  end
 end
