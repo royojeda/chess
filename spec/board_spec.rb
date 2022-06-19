@@ -163,4 +163,47 @@ describe Board do
       end
     end
   end
+
+  describe '#all_empty?' do
+    subject(:all_empty_board) { described_class.new }
+
+    let(:test_square_one) { instance_double(Square, file: 'a', rank: '6') }
+    let(:test_square_two) { instance_double(Square, file: 'a', rank: '7') }
+    let(:test_square_three) { instance_double(Square, file: 'a', rank: '8') }
+
+    before do
+      location_one = %w[a 6]
+      location_two = %w[a 7]
+      location_three = %w[a 8]
+      allow(all_empty_board).to receive(:square_at).with(location_one).and_return(test_square_one)
+      allow(all_empty_board).to receive(:square_at).with(location_two).and_return(test_square_two)
+      allow(all_empty_board).to receive(:square_at).with(location_three).and_return(test_square_three)
+    end
+
+    context "when the @occupant of all squares at the given locations are all ' '" do
+      before do
+        allow(test_square_one).to receive(:empty?).and_return(true)
+        allow(test_square_two).to receive(:empty?).and_return(true)
+        allow(test_square_three).to receive(:empty?).and_return(true)
+      end
+
+      it 'returns true' do
+        locations = [%w[a 6], %w[a 7], %w[a 8]]
+        expect(all_empty_board.all_empty?(locations)).to be(true)
+      end
+    end
+
+    context "when the @occupant of one of the squares at the given locations is not ' '" do
+      before do
+        allow(test_square_one).to receive(:empty?).and_return(true)
+        allow(test_square_two).to receive(:empty?).and_return(true)
+        allow(test_square_three).to receive(:empty?).and_return(false)
+      end
+
+      it 'returns false' do
+        locations = [%w[a 6], %w[a 7], %w[a 8]]
+        expect(all_empty_board.all_empty?(locations)).to be(false)
+      end
+    end
+  end
 end
