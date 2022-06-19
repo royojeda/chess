@@ -92,4 +92,39 @@ describe Board do
       expect(test_square).to have_received(:place).with(test_piece)
     end
   end
+
+  describe '#show_moves_from' do
+    subject(:show_moves_board) { described_class.new }
+
+    let(:test_start) { instance_double(Square, file: 'e', rank: '2') }
+    let(:test_destination_one) { instance_double(Square, file: 'e', rank: '3') }
+    let(:test_destination_two) { instance_double(Square, file: 'e', rank: '4') }
+
+    before do
+      location = %w[e 2]
+      allow(show_moves_board).to receive(:square_at).with(location).and_return(test_start)
+      allow(test_start).to receive(:highlight_blue)
+      allow(test_start).to receive(:all_destinations).with(show_moves_board)
+                                                     .and_return([%w[e 3], %w[e 4]])
+      allow(show_moves_board).to receive(:no_check_after?).and_return(true, true)
+      valids = [%w[e 3], %w[e 4]]
+      allow(show_moves_board).to receive(:squares_at).with(valids)
+                                                     .and_return([test_destination_one, test_destination_two])
+      allow(test_destination_one).to receive(:highlight_green)
+      allow(test_destination_two).to receive(:highlight_green)
+      show_moves_board.show_moves_from(location)
+    end
+
+    it 'sends #highlight_blue to the square at a given location' do
+      expect(test_start).to have_received(:highlight_blue)
+    end
+
+    it 'sends #highlight_green to the first valid destination square' do
+      expect(test_destination_one).to have_received(:highlight_green)
+    end
+
+    it 'sends #highlight_green to the second valid destination square' do
+      expect(test_destination_two).to have_received(:highlight_green)
+    end
+  end
 end
