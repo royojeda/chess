@@ -12,4 +12,14 @@ describe Square do
       expect(place_square.occupant).to eq(test_piece)
     end
   end
+
+  describe '#remove_occupant' do
+    subject(:remove_square) { described_class.new(file: 'a', rank: '1') }
+
+    it "sets @occupant to ' '(single space string)" do
+      remove_square.remove_occupant
+      expected = ' '
+      expect(remove_square.occupant).to eq(expected)
+    end
+  end
 end
