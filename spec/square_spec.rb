@@ -128,4 +128,47 @@ describe Square do
       end
     end
   end
+
+  describe '#contains_enemy_pawn' do
+    subject(:pawn_square) { described_class.new(file: 'a', rank: '1') }
+
+    context 'when @occupant is a pawn not of the same color(as the argument)' do
+      let(:test_occupant) { instance_double(Pawn, color: 'black', first_move: true) }
+
+      before do
+        allow(pawn_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(true)
+      end
+
+      it 'returns true' do
+        expect(pawn_square.contains_enemy_pawn?('white')).to be(true)
+      end
+    end
+
+    context 'when @occupant is a pawn of the same color(as the argument)' do
+      let(:test_occupant) { instance_double(Pawn, color: 'white', first_move: true) }
+
+      before do
+        allow(pawn_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(true)
+      end
+
+      it 'returns false' do
+        expect(pawn_square.contains_enemy_pawn?('white')).to be(false)
+      end
+    end
+
+    context 'when @occupant is not a pawn' do
+      let(:test_occupant) { instance_double(King, color: 'white', first_move: true) }
+
+      before do
+        allow(pawn_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(false)
+      end
+
+      it 'returns false' do
+        expect(pawn_square.contains_enemy_pawn?('white')).to be(false)
+      end
+    end
+  end
 end
