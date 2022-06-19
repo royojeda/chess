@@ -314,4 +314,28 @@ describe Square do
       end
     end
   end
+
+  describe '#owned_by?' do
+    subject(:owned_square) { described_class.new(file: 'a', rank: '1') }
+
+    before do
+      allow(owned_square).to receive(:occupant).and_return(test_occupant)
+    end
+
+    context 'when @occupant is of the same color as the argument' do
+      let(:test_occupant) { instance_double(Pawn, color: 'white') }
+
+      it 'returns true' do
+        expect(owned_square.owned_by?('white')).to be(true)
+      end
+    end
+
+    context 'when @occupant is not of the same color as the argument' do
+      let(:test_occupant) { instance_double(Pawn, color: 'black') }
+
+      it 'returns false' do
+        expect(owned_square.owned_by?('white')).to be(false)
+      end
+    end
+  end
 end
