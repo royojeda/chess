@@ -85,4 +85,47 @@ describe Square do
       end
     end
   end
+
+  describe '#contains_own_king?' do
+    subject(:king_square) { described_class.new(file: 'a', rank: '1') }
+
+    context 'when @occupant is a king of the same color(as the argument)' do
+      let(:test_occupant) { instance_double(King, color: 'white', first_move: true) }
+
+      before do
+        allow(king_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(King).and_return(true)
+      end
+
+      it 'returns true' do
+        expect(king_square.contains_own_king?('white')).to be(true)
+      end
+    end
+
+    context 'when @occupant is a king not of the same color(as the argument)' do
+      let(:test_occupant) { instance_double(King, color: 'black', first_move: true) }
+
+      before do
+        allow(king_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(King).and_return(true)
+      end
+
+      it 'returns false' do
+        expect(king_square.contains_own_king?('white')).to be(false)
+      end
+    end
+
+    context 'when @occupant is not a king' do
+      let(:test_occupant) { instance_double(Pawn, color: 'white', first_move: true) }
+
+      before do
+        allow(king_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(King).and_return(false)
+      end
+
+      it 'returns false' do
+        expect(king_square.contains_own_king?('white')).to be(false)
+      end
+    end
+  end
 end
