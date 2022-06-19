@@ -171,4 +171,51 @@ describe Square do
       end
     end
   end
+
+  describe '#promotable?' do
+    context 'when @occupant is a white pawn on the 8th rank' do
+      subject(:promotable_square) { described_class.new(file: 'c', rank: '8') }
+
+      let(:test_occupant) { instance_double(Pawn, color: 'white') }
+
+      before do
+        allow(promotable_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(true)
+      end
+
+      it 'returns true' do
+        expect(promotable_square.promotable?).to be(true)
+      end
+    end
+
+    context 'when @occupant is a black pawn on the 1st rank' do
+      subject(:promotable_square) { described_class.new(file: 'c', rank: '1') }
+
+      let(:test_occupant) { instance_double(Pawn, color: 'black') }
+
+      before do
+        allow(promotable_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(true)
+      end
+
+      it 'returns true' do
+        expect(promotable_square.promotable?).to be(true)
+      end
+    end
+
+    context 'when @occupant is a pawn not on the 1st or 8th rank' do
+      subject(:promotable_square) { described_class.new(file: 'c', rank: '5') }
+
+      let(:test_occupant) { instance_double(Pawn, color: 'white') }
+
+      before do
+        allow(promotable_square).to receive(:occupant).and_return(test_occupant)
+        allow(test_occupant).to receive(:is_a?).with(Pawn).and_return(true)
+      end
+
+      it 'returns false' do
+        expect(promotable_square.promotable?).to be(false)
+      end
+    end
+  end
 end
