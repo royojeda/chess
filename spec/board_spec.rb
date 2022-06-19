@@ -1,5 +1,6 @@
 require './lib/board'
 require './lib/square'
+require './lib/Pieces/pawn'
 
 describe Board do
   describe '#move' do
@@ -71,6 +72,24 @@ describe Board do
 
     it 'sends #remove_occupant to the source square' do
       expect(test_source).to have_received(:remove_occupant)
+    end
+  end
+
+  describe '#place' do
+    subject(:place_board) { described_class.new }
+
+    let(:test_piece) { instance_double(Pawn, color: 'white') }
+    let(:test_square) { instance_double(Square, file: 'a', rank: '1') }
+
+    before do
+      location = %w[a 1]
+      allow(place_board).to receive(:square_at).with(location).and_return(test_square)
+      allow(test_square).to receive(:place)
+      place_board.place(test_piece, location)
+    end
+
+    it 'sends #place with test_piece to the square at a given location' do
+      expect(test_square).to have_received(:place).with(test_piece)
     end
   end
 end
