@@ -1,4 +1,6 @@
 module Notices
+  private
+
   def checkmate_notice
     "Checkmate! #{other_player.color.capitalize} wins!"
   end

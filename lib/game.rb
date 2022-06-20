@@ -40,6 +40,8 @@ class Game
     false
   end
 
+  private
+
   # rubocop:disable Metrics/MethodLength
   def turn
     check_check

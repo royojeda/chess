@@ -1,4 +1,6 @@
 module TurnActions
+  private
+
   def check?(player)
     board.check?(player.color)
   end

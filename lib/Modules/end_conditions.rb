@@ -1,4 +1,6 @@
 module EndConditions
+  private
+
   def over?
     return false unless no_valid_moves_for?(current_player)
 
