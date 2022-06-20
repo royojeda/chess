@@ -1,8 +1,13 @@
 # Chess
 
-<p align="center">
+<p align = 'center'>
   <img src="assets/gifs/demo.gif" width="830">
 </p>
+
+##### <p align ='center'>A variation of the shortest possible stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
+<br>
+
+---
 
 ## Description
 
