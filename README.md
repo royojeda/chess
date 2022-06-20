@@ -1,7 +1,7 @@
 # Chess
 
 <p align="center">
-  <img src="assets/gifs/demo.gif" width="700">
+  <img src="assets/gifs/demo.gif" width="830">
 </p>
 
 ## Description
@@ -51,7 +51,7 @@ The live preview method is easier, but the local clone method has better perform
 ### Loading a save file
 As you run the application, there will be a prompt to decide whether or not to load a saved game.
 
-<img src="assets/images/load.png" width="700">
+<img src="assets/images/load.png" width="830">
 
 A save file is included in the repository, but you can also save your game at the start of every turn for later continuation.
 
@@ -62,15 +62,15 @@ As with any standard game of chess, White moves first.
 
 The current player is now asked for a location of the piece that they want to move.
 
-<img src="assets/images/piece_prompt.png" width="700">
+<img src="assets/images/piece_prompt.png" width="830">
 
 The possible move/s for that piece is/are highlighted, and a second prompt asks for a location to which the player wants to move the selected piece.
 
-<img src="assets/images/moves_highlight.png" width="700">
+<img src="assets/images/moves_highlight.png" width="830">
 
 Finally, the move is executed and the other player begins their turn.
 
-<img src="assets/images/move_execution.png" width="700">
+<img src="assets/images/move_execution.png" width="830">
 
 The locations are expected to be entered in [Algebraic Notation](https://en.wikipedia.org/wiki/Algebraic_notation_(chess)).<br><br>
 
@@ -119,7 +119,7 @@ This application is not developed in a test-first manner. However, I wrote sever
 
 The tests are written in RSpec. Run them by executing the command: `rspec` in the command line.
 
-<img src="assets/images/tests.png" width="700">
+<img src="assets/images/tests.png" width="830">
 
 ---
 
