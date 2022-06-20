@@ -54,11 +54,11 @@ class Board
 
   def display
     squares.each do |square|
-      print "     #{square.rank}" if square.file == 'a'
+      print "        #{square.rank}" if square.file == 'a'
       print square
       puts if square.file == 'h'
     end
-    puts '      A B C D E F G H'
+    puts '         A B C D E F G H'
   end
 
   private
