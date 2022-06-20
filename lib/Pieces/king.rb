@@ -9,10 +9,6 @@ class King < Piece
      up_right_moves(range), up_left_moves(range), down_right_moves(range), down_left_moves(range)]
   end
 
-  def range
-    1
-  end
-
   def specials
     castles
   end
@@ -24,6 +20,12 @@ class King < Piece
       board.all_empty?(locations_between_king_and_rook(move)) &&
       board.none_attacked?(color, locations_in_king_path(move)) &&
       board.can_castle?(color, rook_square(move))
+  end
+
+  private
+
+  def range
+    1
   end
 
   def right_side_castle?(move)

@@ -40,12 +40,14 @@ class Square
     occupant.moved
   end
 
-  def last_rank
-    occupant.color == 'white' ? '8' : '1'
-  end
-
   def all_destinations(board)
     occupant.all_destinations(board)
+  end
+
+  private
+
+  def last_rank
+    occupant.color == 'white' ? '8' : '1'
   end
 
   # rubocop:disable Metrics/MethodLength

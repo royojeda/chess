@@ -8,6 +8,8 @@ class Rook < Piece
     [upward_moves, downward_moves, leftward_moves, rightward_moves]
   end
 
+  private
+
   def color_white
     "\u2656"
   end

@@ -1,4 +1,6 @@
 module Promotion
+  private
+
   def promote
     self.notice = 'Pawn promotion!'
     type = choose_replacement

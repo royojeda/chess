@@ -3,14 +3,6 @@ module SquarePredicates
     contains_own_rook?(color) && occupant.first_move
   end
 
-  def contains_own_rook?(color)
-    own_piece?(color) && contains_rook?
-  end
-
-  def contains_rook?
-    occupant.is_a?(Rook)
-  end
-
   def contains_own_king?(color)
     own_piece?(color) && contains_king?
   end
@@ -31,10 +23,6 @@ module SquarePredicates
     contains_pawn? && on_last_rank?
   end
 
-  def on_last_rank?
-    rank == last_rank
-  end
-
   def own_piece?(color)
     !empty? && owned_by?(color)
   end
@@ -49,6 +37,20 @@ module SquarePredicates
 
   def owned_by?(color)
     occupant.color == color
+  end
+
+  private
+
+  def contains_own_rook?(color)
+    own_piece?(color) && contains_rook?
+  end
+
+  def contains_rook?
+    occupant.is_a?(Rook)
+  end
+
+  def on_last_rank?
+    rank == last_rank
   end
 
   def file_and_rank_odd?

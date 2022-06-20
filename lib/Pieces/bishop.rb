@@ -8,6 +8,8 @@ class Bishop < Piece
     [up_right_moves, up_left_moves, down_right_moves, down_left_moves]
   end
 
+  private
+
   def color_white
     "\u2657"
   end

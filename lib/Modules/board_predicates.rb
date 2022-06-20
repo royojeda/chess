@@ -10,10 +10,6 @@ module BoardPredicates
     arr.empty?
   end
 
-  def attacked?(color, location)
-    all_enemy_moves(color).include?(square_at(location))
-  end
-
   def out_of_bounds?(location)
     square_at(location).nil?
   end
@@ -24,11 +20,6 @@ module BoardPredicates
     enemy_pawn_at?(attacker.color, location) &&
       chance_not_passed(location) &&
       piece_at(location).previous_is_two_forward?
-  end
-
-  def enemy_pawn_at?(color, location)
-    !out_of_bounds?(location) &&
-      square_at(location).contains_enemy_pawn?(color)
   end
 
   def all_empty?(locations)
@@ -57,25 +48,6 @@ module BoardPredicates
     destination.promotable?
   end
 
-  def en_passant?(source, destination)
-    destination.contains_pawn? && source.file != destination.file
-  end
-
-  def no_check_after?(start, destination)
-    save_squares = Marshal.dump(squares)
-
-    source = square_at(start)
-    fin = square_at(destination)
-    fin.update_occupant(source)
-    source.remove_occupant
-    square_behind(fin).remove_occupant if en_passant?(source, fin)
-
-    color = piece_at(destination).color
-    result = !check?(color)
-    self.squares = Marshal.load(save_squares)
-    result
-  end
-
   def valid_move?(location)
     valid_moves.any? do |move|
       move.file == file(location) && move.rank == rank(location)
@@ -97,6 +69,36 @@ module BoardPredicates
 
   def can_castle?(color, location)
     square_at(location).can_castle?(color)
+  end
+
+  private
+
+  def attacked?(color, location)
+    all_enemy_moves(color).include?(square_at(location))
+  end
+
+  def enemy_pawn_at?(color, location)
+    !out_of_bounds?(location) &&
+      square_at(location).contains_enemy_pawn?(color)
+  end
+
+  def en_passant?(source, destination)
+    destination.contains_pawn? && source.file != destination.file
+  end
+
+  def no_check_after?(start, destination)
+    save_squares = Marshal.dump(squares)
+
+    source = square_at(start)
+    fin = square_at(destination)
+    fin.update_occupant(source)
+    source.remove_occupant
+    square_behind(fin).remove_occupant if en_passant?(source, fin)
+
+    color = piece_at(destination).color
+    result = !check?(color)
+    self.squares = Marshal.load(save_squares)
+    result
   end
 
   def right_side_castle?(move)

@@ -2,15 +2,11 @@ class Piece
   attr_reader :color
   attr_accessor :square, :previous, :first_move
 
-  def initialize(color:, square:, previous: nil, first_move: true)
+  def initialize(color:, square: nil, previous: nil, first_move: true)
     @color = color
     @square = square
     @previous = previous
     @first_move = first_move
-  end
-
-  def location
-    [square.file, square.rank]
   end
 
   def moved
@@ -31,6 +27,19 @@ class Piece
     arr + special_moves(board)
   end
 
+  def previous_is_two_forward?
+    square.rank == (previous.rank.ord + 2).chr ||
+      square.rank == (previous.rank.ord - 2).chr
+  end
+
+  def location
+    [square.file, square.rank]
+  end
+
+  private
+
+  def moves; end
+
   def special_moves(board)
     valid_specials = specials.select do |special|
       special_allowed?(special, board)
@@ -48,11 +57,6 @@ class Piece
 
   def stop_after?(board, destination)
     board.enemy_piece_at?(color, destination)
-  end
-
-  def previous_is_two_forward?
-    square.rank == (previous.rank.ord + 2).chr ||
-      square.rank == (previous.rank.ord - 2).chr
   end
 
   def destination_from(move)

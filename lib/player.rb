@@ -15,6 +15,8 @@ class Player
     give_input
   end
 
+  private
+
   def give_input
     gets.chomp.chars
   end

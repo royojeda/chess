@@ -1,4 +1,6 @@
 module InputChecker
+  private
+
   def check_start_errors
     self.notice = check_valid_format(start) ||
                   check_empty_square_at(start) ||
