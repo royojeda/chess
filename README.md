@@ -79,7 +79,7 @@ Finally, the move is executed and the other player begins their turn.
 The locations are expected to be entered in [Algebraic Notation](https://en.wikipedia.org/wiki/Algebraic_notation_(chess)).<br><br>
 
 ### Saving the game
-Instead of selecting piece, the player can also enter 'save' at the start of every turn and the current game conditions will be saved to a save file which can be continued later on, as described earlier.
+Instead of selecting a piece, the player can also enter 'save' at the start of every turn and the current game conditions will be saved to a save file which can be continued later on, as described earlier.
 
 ---
 
