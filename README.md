@@ -5,7 +5,6 @@
 </p>
 
 ##### <p align ='center'>A variation of the shortest possible stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
-<br>
 
 ---
 
