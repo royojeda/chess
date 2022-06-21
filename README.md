@@ -79,7 +79,7 @@ Finally, the move is executed and the other player begins their turn.
 The locations are expected to be entered in [Algebraic Notation](https://en.wikipedia.org/wiki/Algebraic_notation_(chess)).<br><br>
 
 ### Saving the game
-Instead of selecting piece, the player can also enter 'save' at the start of every turn and the current game conditions will be saved to a save file which can be continued later on, as described earlier.
+Instead of selecting a piece, the player can also enter 'save' at the start of every turn and the current game conditions will be saved to a save file which can be continued later on, as described earlier.
 
 ---
 
@@ -119,7 +119,7 @@ Aside from those shown above, here are some other things that the application ca
 
 ## Tests
 
-This application is not developed in a test-first manner. However, I wrote several tests at the end for many of the methods that I might refactor later on as I gain experience with more design patterns and better ways to solve recurring problems.
+This application is not developed in a test-first manner. Still, I wrote several tests for many of the methods that I might refactor later on as I gain more experience with design patterns and encounter better ways to solve recurring problems.
 
 The tests are written in RSpec. Run them by executing the command: `rspec` in the command line.
 
@@ -128,10 +128,10 @@ The tests are written in RSpec. Run them by executing the command: `rspec` in th
 ---
 
 ## Reflections
-I think this project is the most challenging piece of software that I have had to make that is not a hypothetical solution to a hypothetical problem. My programming experience prior to TOP was almost always done alongside hardware work, which means that the focus is split between two different components of the task.
+I think this project is the most challenging piece of software that I have had to make that is not a hypothetical solution to a hypothetical problem. My programming experience prior to TOP was almost always alongside some form of hardware work, which means that the focus is split between two different components of the task.
 
 In terms of the sheer scope of making pure software, this is probably my best work at the time of writing, and it's not even perfect, nor something that I am a hundred percent satisfied with.
 
-However, it is at the point where any further improvements would not be worthwhile to me. The project specifications are all satisfied, with even several additional features that I personally consider essential to my implementation.
+However, it is at the point where any further improvements would not be worthwhile to me. The project specifications are all met, with even several additional features that I personally consider essential to my implementation.
 
-In conclusion, I believe that this is a project that's worth doing and finishing for anyone who wants to assess their skills in programming; in my case, with Ruby and the concepts of object-oriented design.
+In conclusion, I believe that this is a project that's worth doing and finishing for anyone who wants to assess their skills in programming; in my case, with Ruby and the concepts in object-oriented design.
