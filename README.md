@@ -21,7 +21,7 @@ As a capstone project, its development incorporates a large portion of the conce
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Tests](#features)
+- [Tests](#tests)
 - [Reflections](#reflections)
 
 ---
