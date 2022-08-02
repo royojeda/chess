@@ -13,7 +13,7 @@ class Piece
     self.first_move = false
   end
 
-  def all_destinations(board)
+  def all_destinations(board, for_check: false)
     arr = []
     moves.each do |direction|
       direction.each do |move|
@@ -24,7 +24,7 @@ class Piece
         break if stop_after?(board, destination)
       end
     end
-    arr + special_moves(board)
+    for_check ? arr : arr + special_moves(board)
   end
 
   def previous_is_two_forward?

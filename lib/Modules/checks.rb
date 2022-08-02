@@ -6,9 +6,7 @@ module Checks
   def all_enemy_moves(color)
     arr = []
     enemy_squares(color).each do |square|
-      next if square.contains_king?
-
-      destinations = square.all_destinations(self)
+      destinations = square.all_destinations(self, for_check: true)
       arr.concat(squares_at(destinations).compact)
     end
     arr
@@ -23,7 +21,7 @@ module Checks
   def all_own_moves(color)
     arr = []
     own_squares(color).each do |square|
-      destinations = square.all_destinations(self).compact
+      destinations = square.all_destinations(self, for_check: true).compact
       valids = destinations.select do |move|
         no_check_after?([square.file, square.rank], move)
       end

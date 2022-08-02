@@ -40,8 +40,8 @@ class Square
     occupant.moved
   end
 
-  def all_destinations(board)
-    occupant.all_destinations(board)
+  def all_destinations(board, for_check: false)
+    occupant.all_destinations(board, for_check:)
   end
 
   private

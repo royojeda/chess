@@ -3,6 +3,7 @@ require './lib/game'
 def ask_load
   puts 'Do you want to load a saved game? (y/n): '
   load_choice = gets.chomp.downcase
+  # load_choice = 'n'
   execute(load_choice)
 end
 
@@ -23,7 +24,7 @@ system 'clear'
 current_game = ask_load
 save = current_game.play
 
-if save == true
+if save
   File.open('save_file', 'w+') { |f| Marshal.dump(current_game, f) }
 
   system 'clear'
