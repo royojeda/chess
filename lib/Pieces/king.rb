@@ -14,9 +14,11 @@ class King < Piece
   end
 
   def special_allowed?(special, board, for_check: false)
+    return false if for_check
+
     move = destination_from(special)
     first_move &&
-      (!board.check?(color) unless for_check) &&
+      !board.check?(color) &&
       board.all_empty?(locations_between_king_and_rook(move)) &&
       board.none_attacked?(color, locations_in_king_path(move)) &&
       board.can_castle?(color, rook_square(move))
