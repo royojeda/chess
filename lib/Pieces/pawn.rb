@@ -12,7 +12,7 @@ class Pawn < Piece
     captures
   end
 
-  def special_allowed?(special, board)
+  def special_allowed?(special, board, for_check: false)
     board.enemy_piece_at?(color, destination_from(special)) ||
       board.allows_en_passant_by?(self, special[0])
   end
