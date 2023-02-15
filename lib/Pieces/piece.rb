@@ -24,7 +24,7 @@ class Piece
         break if stop_after?(board, destination)
       end
     end
-    arr + special_moves(board, for_check:)
+    arr + special_moves(board, for_check: for_check)
   end
 
   def previous_is_two_forward?
@@ -43,7 +43,7 @@ class Piece
 
   def special_moves(board, for_check: false)
     valid_specials = specials.select do |special|
-      special_allowed?(special, board, for_check:)
+      special_allowed?(special, board, for_check: for_check)
     end
     valid_specials.map { |special| destination_from(special) }
   end

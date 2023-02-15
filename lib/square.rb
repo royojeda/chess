@@ -36,7 +36,7 @@ class Square
   end
 
   def all_destinations(board, for_check: false)
-    occupant.all_destinations(board, for_check:)
+    occupant.all_destinations(board, for_check: for_check)
   end
 
   def can_castle?(color)
