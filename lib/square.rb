@@ -128,7 +128,7 @@ class Square
   end
 
   def background_dark
-    3
+    94
   end
 
   def determine_color
