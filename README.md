@@ -4,7 +4,7 @@
   <img src="assets/gifs/demo.gif" width="830">
 </p>
 
-##### <p align ='center'>A variation of the shortest possible stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
+##### <p align ='center'>A demonstration of the shortest stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
 
 ---
 
@@ -88,7 +88,7 @@ The locations are expected to be entered in [Algebraic Notation](<https://en.wik
 
 ### Saving the game
 
-Instead of selecting a piece, the player can also enter `save` at the start of every turn, and the current game conditions will be saved to a file that can be loaded later.
+Instead of selecting a piece, the player can also enter `save` at the start of every turn to save the current game conditions to a file that can be loaded in later.
 
 ---
 
@@ -126,7 +126,7 @@ Aside from those shown above, here are some other things that the application ca
 
 ## Tests
 
-This application is not developed in a test-first manner. Nevertheless, I wrote several automated tests afterward, and I can recall at least one instance where a bug was discovered immediately because of these tests.
+The application is not developed in a test-first manner. Nevertheless, I wrote several automated tests afterward, and I can recall at least a couple of instances where a bug was discovered immediately because of these tests.
 
 Run the tests by executing
 
@@ -142,6 +142,6 @@ in the command line.
 
 ## Reflections
 
-I believe that this game has been one of the most complex pieces of software that I have had to write. In terms of the sheer scope of building an application, this is probably my best work yet, but I know that it's nowhere near perfect.
+This has been one of the most complex pieces of software that I've made. At the time of writing, this is probably my best work yet, although I do know that it's not perfect.
 
-However, it is at a point where any further improvements would not be worthwhile to me. The project specifications are all met, along with several additional features that I think are essential. It may, or may not be good, but for now, it's good enough.
+I've decided that any further improvement would not be worthwhile to me at this time. The project specifications are met, along with several additional features that I added just because I think they are essential to my interpretation of a usable chess game. Where or not it's good is subjective, but for now, it's good enough.
