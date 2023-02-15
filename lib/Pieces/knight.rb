@@ -1,4 +1,4 @@
-require './lib/Pieces/piece'
+require "./lib/Pieces/piece"
 
 class Knight < Piece
   def moves

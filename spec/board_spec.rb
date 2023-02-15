@@ -1,9 +1,9 @@
-require './lib/board'
-require './lib/square'
-require './lib/Pieces/pawn'
+require "./lib/board"
+require "./lib/square"
+require "./lib/Pieces/pawn"
 
 describe Board do
-  describe '#move' do
+  describe "#move" do
     subject(:move_board) { described_class.new }
 
     let(:test_source) { instance_double(Square) }
@@ -24,28 +24,28 @@ describe Board do
       move_board.move(start, move)
     end
 
-    it 'sends #store_as_previous to the source square' do
+    it "sends #store_as_previous to the source square" do
       expect(test_source).to have_received(:store_as_previous)
     end
 
-    it 'sends #update_occupant to the destination square' do
+    it "sends #update_occupant to the destination square" do
       expect(test_destination).to have_received(:update_occupant)
     end
 
-    it 'sends #remove_occupant to the source square' do
+    it "sends #remove_occupant to the source square" do
       expect(test_source).to have_received(:remove_occupant)
     end
 
-    it 'sends #highlight_blue to the source square' do
+    it "sends #highlight_blue to the source square" do
       expect(test_source).to have_received(:highlight_blue)
     end
 
-    it 'sends #highlight_blue to the destination square' do
+    it "sends #highlight_blue to the destination square" do
       expect(test_destination).to have_received(:highlight_blue)
     end
   end
 
-  describe '#rook_castle_move' do
+  describe "#rook_castle_move" do
     subject(:rook_castle_board) { described_class.new }
 
     let(:test_source) { instance_double(Square) }
@@ -62,24 +62,24 @@ describe Board do
       rook_castle_board.rook_castle_move(move)
     end
 
-    it 'sends #store_as_previous to the source square' do
+    it "sends #store_as_previous to the source square" do
       expect(test_source).to have_received(:store_as_previous)
     end
 
-    it 'sends #update_occupant to the destination square' do
+    it "sends #update_occupant to the destination square" do
       expect(test_destination).to have_received(:update_occupant)
     end
 
-    it 'sends #remove_occupant to the source square' do
+    it "sends #remove_occupant to the source square" do
       expect(test_source).to have_received(:remove_occupant)
     end
   end
 
-  describe '#place' do
+  describe "#place" do
     subject(:place_board) { described_class.new }
 
-    let(:test_piece) { instance_double(Pawn, color: 'white') }
-    let(:test_square) { instance_double(Square, file: 'a', rank: '1') }
+    let(:test_piece) { instance_double(Pawn, color: "white") }
+    let(:test_square) { instance_double(Square, file: "a", rank: "1") }
 
     before do
       location = %w[a 1]
@@ -88,88 +88,88 @@ describe Board do
       place_board.place(test_piece, location)
     end
 
-    it 'sends #place with test_piece to the square at a given location' do
+    it "sends #place with test_piece to the square at a given location" do
       expect(test_square).to have_received(:place).with(test_piece)
     end
   end
 
-  describe '#show_moves_from' do
+  describe "#show_moves_from" do
     subject(:show_moves_board) { described_class.new }
 
-    let(:test_start) { instance_double(Square, file: 'e', rank: '2') }
-    let(:test_destination_one) { instance_double(Square, file: 'e', rank: '3') }
-    let(:test_destination_two) { instance_double(Square, file: 'e', rank: '4') }
+    let(:test_start) { instance_double(Square, file: "e", rank: "2") }
+    let(:test_destination_one) { instance_double(Square, file: "e", rank: "3") }
+    let(:test_destination_two) { instance_double(Square, file: "e", rank: "4") }
 
     before do
       location = %w[e 2]
       allow(show_moves_board).to receive(:square_at).with(location).and_return(test_start)
       allow(test_start).to receive(:highlight_blue)
       allow(test_start).to receive(:all_destinations).with(show_moves_board)
-                                                     .and_return([%w[e 3], %w[e 4]])
+        .and_return([%w[e 3], %w[e 4]])
       allow(show_moves_board).to receive(:no_check_after?).and_return(true, true)
       valids = [%w[e 3], %w[e 4]]
       allow(show_moves_board).to receive(:squares_at).with(valids)
-                                                     .and_return([test_destination_one, test_destination_two])
+        .and_return([test_destination_one, test_destination_two])
       allow(test_destination_one).to receive(:highlight_green)
       allow(test_destination_two).to receive(:highlight_green)
       show_moves_board.show_moves_from(location)
     end
 
-    it 'sends #highlight_blue to the square at a given location' do
+    it "sends #highlight_blue to the square at a given location" do
       expect(test_start).to have_received(:highlight_blue)
     end
 
-    it 'sends #highlight_green to the first valid destination square' do
+    it "sends #highlight_green to the first valid destination square" do
       expect(test_destination_one).to have_received(:highlight_green)
     end
 
-    it 'sends #highlight_green to the second valid destination square' do
+    it "sends #highlight_green to the second valid destination square" do
       expect(test_destination_two).to have_received(:highlight_green)
     end
   end
 
-  describe '#square_at' do
+  describe "#square_at" do
     subject(:square_at_board) { described_class.new }
 
-    context 'when the given location is c5' do
-      it 'returns the square at c5' do
+    context "when the given location is c5" do
+      it "returns the square at c5" do
         location = %w[c 5]
         expect([square_at_board.square_at(location).file, square_at_board.square_at(location).rank]).to eq(location)
       end
     end
 
-    context 'when the given location is e7' do
-      it 'returns the square at e7' do
+    context "when the given location is e7" do
+      it "returns the square at e7" do
         location = %w[e 7]
         expect([square_at_board.square_at(location).file, square_at_board.square_at(location).rank]).to eq(location)
       end
     end
   end
 
-  describe '#out_of_bounds?' do
+  describe "#out_of_bounds?" do
     subject(:bounds_board) { described_class.new }
 
-    context 'when the given location is not in a standard chess board' do
-      it 'returns true' do
+    context "when the given location is not in a standard chess board" do
+      it "returns true" do
         location = %w[e 9]
         expect(bounds_board.out_of_bounds?(location)).to be(true)
       end
     end
 
-    context 'when the given location is in a standard chess board' do
-      it 'returns false' do
+    context "when the given location is in a standard chess board" do
+      it "returns false" do
         location = %w[c 5]
         expect(bounds_board.out_of_bounds?(location)).to be(false)
       end
     end
   end
 
-  describe '#all_empty?' do
+  describe "#all_empty?" do
     subject(:all_empty_board) { described_class.new }
 
-    let(:test_square_one) { instance_double(Square, file: 'a', rank: '6') }
-    let(:test_square_two) { instance_double(Square, file: 'a', rank: '7') }
-    let(:test_square_three) { instance_double(Square, file: 'a', rank: '8') }
+    let(:test_square_one) { instance_double(Square, file: "a", rank: "6") }
+    let(:test_square_two) { instance_double(Square, file: "a", rank: "7") }
+    let(:test_square_three) { instance_double(Square, file: "a", rank: "8") }
 
     before do
       location_one = %w[a 6]
@@ -187,7 +187,7 @@ describe Board do
         allow(test_square_three).to receive(:empty?).and_return(true)
       end
 
-      it 'returns true' do
+      it "returns true" do
         locations = [%w[a 6], %w[a 7], %w[a 8]]
         expect(all_empty_board.all_empty?(locations)).to be(true)
       end
@@ -200,7 +200,7 @@ describe Board do
         allow(test_square_three).to receive(:empty?).and_return(false)
       end
 
-      it 'returns false' do
+      it "returns false" do
         locations = [%w[a 6], %w[a 7], %w[a 8]]
         expect(all_empty_board.all_empty?(locations)).to be(false)
       end

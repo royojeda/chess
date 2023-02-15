@@ -4,15 +4,15 @@
   <img src="assets/gifs/demo.gif" width="830">
 </p>
 
-##### <p align ='center'>A variation of the shortest possible stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
+##### <p align ='center'>A demonstration of the shortest stalemate<br>(https://www.chess.com/forum/view/game-showcase/the-shortest-stalemate)</p>
 
 ---
 
 ## Description
 
-This is a game of chess that can be played on the command line by two human players. It is my submission for the [Ruby course's final project](https://www.theodinproject.com/lessons/ruby-ruby-final-project) in [The Odin Project](https://www.theodinproject.com/)(TOP)'s curriculum.
+This is a game of chess that can be played on the terminal by two human players.
 
-As a capstone project, its development incorporates a large portion of the concepts that I have encountered while learning the language. It also showcases (or at least I hope it does!) some additional skills that I picked up since the beginning of this undertaking.
+The project's development incorporates a large portion of the concepts that I have encountered while studying object-oriented design with Ruby, along with some additional tricks that I have picked up since the beginning of this undertaking.
 
 ---
 
@@ -21,7 +21,7 @@ As a capstone project, its development incorporates a large portion of the conce
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Tests](#features)
+- [Tests](#tests)
 - [Reflections](#reflections)
 
 ---
@@ -30,108 +30,118 @@ As a capstone project, its development incorporates a large portion of the conce
 
 There are a couple of ways to run the software:
 
-  1. The first way is to visit the [online live preview](https://replit.com/@royojeda/chess). Once there, simply click the 'Play' icon, or the 'Run' button.
+1. The first one is to visit the [online live preview](https://replit.com/@royojeda/chess). Once there, simply click the `Play` icon or the `Run` button.
 
-  2. The other option is to clone the GitHub repository to your own Linux computer by running the following command in the command line (you must have git installed):
+2. The other option is to clone the repository to your computer by running the following command in the command line (you must have **Git** and **Ruby** installed):
 
-      ```git
-      git clone git@github.com:royojeda/chess.git
-      ```
-     and then run:
-      ```bash
-      cd chess
-      ```
-     to enter the project directory, and finally, run:
-      ```
-      ruby lib/main.rb
-      ```
-     to get the application running.
+   ```bash
+   git clone git@github.com:royojeda/chess.git
+   ```
+
+   and then run:
+
+   ```bash
+   cd chess
+   ```
+
+   to enter the project directory, and finally, run:
+
+   ```
+   ruby lib/main.rb
+   ```
+
+   to get the application running.
 
 The live preview method is easier, but the local clone method has better performance (i.e., less stuttering).
 
 ---
 
 ## Usage
+
 ### Loading a save file
+
 As you run the application, there will be a prompt to decide whether or not to load a saved game.
 
 <img src="assets/images/load.png" width="830">
 
-A save file is included in the repository, but you can also save your game at the start of every turn for later continuation.
+A sample save file is included in the repository, but you can also save your game at the start of every turn for later continuation.
 
 If unsure, simply enter `n` to start a new game.<br><br>
 
 ### Turns
+
 As with any standard game of chess, White moves first.
 
-The current player is now asked for a location of the piece that they want to move.
+The current player is now asked for the location of the piece that they want to move.
 
 <img src="assets/images/piece_prompt.png" width="830">
 
-The possible move/s for that piece is/are highlighted, and a second prompt asks for a location to which the player wants to move the selected piece.
+The possible move(s) for that piece are highlighted, and a second prompt asks for a location to which the player wants to move the selected piece.
 
 <img src="assets/images/moves_highlight.png" width="830">
 
-Finally, the move is executed and the other player begins their turn.
+Finally, the move is executed, and the other player begins their turn.
 
 <img src="assets/images/move_execution.png" width="830">
 
-The locations are expected to be entered in [Algebraic Notation](https://en.wikipedia.org/wiki/Algebraic_notation_(chess)).<br><br>
+The locations are expected to be entered in [Algebraic Notation](<https://en.wikipedia.org/wiki/Algebraic_notation_(chess)>).<br><br>
 
 ### Saving the game
-Instead of selecting a piece, the player can also enter 'save' at the start of every turn and the current game conditions will be saved to a save file which can be continued later on, as described earlier.
+
+Instead of selecting a piece, the player can also enter `save` at the start of every turn to save the current game conditions to a file that can be loaded in later.
 
 ---
 
 ## Features
 
 Aside from those shown above, here are some other things that the application can handle:
- - [Castling](https://en.wikipedia.org/wiki/Castling).
- - [En passant](https://en.wikipedia.org/wiki/En_passant).
- - [Promotion](https://en.wikipedia.org/wiki/Promotion_(chess)).
- - User error (with specific error messages for each situation)
 
-   1. Player input is not in a valid format.
-   1. Player selects an empty square when asked for a piece to move.
-   1. Player tries to move an opponent's piece.
-   1. Player tries to move a selected piece to an invalid destination.
+- [Castling](https://en.wikipedia.org/wiki/Castling).
+- [En passant](https://en.wikipedia.org/wiki/En_passant).
+- [Promotion](<https://en.wikipedia.org/wiki/Promotion_(chess)>).
+- User error
 
-      1. The selected piece doesn't support moving to the destination.
+  1.  Player input is not in a valid format.
+  1.  A player tries to move an empty square.
+  1.  A player tries to move an opponent's piece.
+  1.  A player tries to move a piece to an invalid destination.
 
-      1. The destination contains an allied piece, and/or, for pawns, an enemy piece.
+      1. The piece's allowed moves don't include the destination.
 
-      1. The destination is behind an enemy piece.
+      1. The destination contains an allied piece and/or, for pawns, an enemy piece.
 
-      1. For pawns, capture move doesn't have a valid capturable piece.
+      1. Except for knights, the way to the destination is blocked by an enemy piece.
 
-      1. For pawns, invalid en passant conditons.
+      1. For pawns, a normal diagonal capture move doesn't capture an enemy piece.
 
-      1. For kings, invalid castling conditions.
+      1. For en passant, the required conditions are not met.
 
-      1. Moving to the destination doesn't remove a check.
+      1. For castling, the required conditions are not met.
 
-      1. Moving to the destination results in a check.
+      1. Moving to the destination leaves the king in check.
 
-  - [Checkmate](https://en.wikipedia.org/wiki/Checkmate) (with an announcement of the winner).
-  - [Stalemate](https://en.wikipedia.org/wiki/Stalemate)
-  - Highlighting of opponent's previous move.
-  - Refreshing of the display every time the board changes (i.e., not flooding the command line with multiple boards appearing beneath the last).
+- [Checkmate](https://en.wikipedia.org/wiki/Checkmate)
+- [Stalemate](https://en.wikipedia.org/wiki/Stalemate)
+- Highlighting the opponent's previous move
 
 ## Tests
 
-This application is not developed in a test-first manner. Still, I wrote several tests for many of the methods that I might refactor later on as I gain more experience with design patterns and encounter better ways to solve recurring problems.
+The application is not developed in a test-first manner. Nevertheless, I wrote several automated tests afterward, and I can recall at least a couple of instances where a bug was discovered immediately because of these tests.
 
-The tests are written in RSpec. Run them by executing the command: `rspec` in the command line.
+Run the tests by executing
 
-<img src="assets/images/tests.png" width="830">
+```bash
+rspec
+```
+
+in the command line.
+
+<img src="assets/images/tests.png">
 
 ---
 
 ## Reflections
-I think this project is the most challenging piece of software that I have had to make that is not a hypothetical solution to a hypothetical problem. My programming experience prior to TOP was almost always alongside some form of hardware work, which means that the focus is split between two different components of the task.
 
-In terms of the sheer scope of making pure software, this is probably my best work at the time of writing, and it's not even perfect, nor something that I am a hundred percent satisfied with.
+This has been one of the most complex pieces of software that I've made. At the time of writing, this is probably my best work yet, although I do know that it's not perfect.
 
-However, it is at the point where any further improvements would not be worthwhile to me. The project specifications are all met, with even several additional features that I personally consider essential to my implementation.
-
-In conclusion, I believe that this is a project that's worth doing and finishing for anyone who wants to assess their skills in programming; in my case, with Ruby and the concepts in object-oriented design.
+I've decided that any further improvement would not be worthwhile to me at this time. The project specifications are met, along with several additional features that I added just because I think they are essential to my interpretation of a usable chess game. Where or not it's good is subjective, but for now, it's good enough.

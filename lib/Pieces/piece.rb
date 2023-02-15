@@ -13,7 +13,7 @@ class Piece
     self.first_move = false
   end
 
-  def all_destinations(board)
+  def all_destinations(board, for_check: false)
     arr = []
     moves.each do |direction|
       direction.each do |move|
@@ -24,7 +24,7 @@ class Piece
         break if stop_after?(board, destination)
       end
     end
-    arr + special_moves(board)
+    arr + special_moves(board, for_check:)
   end
 
   def previous_is_two_forward?
@@ -38,11 +38,12 @@ class Piece
 
   private
 
-  def moves; end
+  def moves
+  end
 
-  def special_moves(board)
+  def special_moves(board, for_check: false)
     valid_specials = specials.select do |special|
-      special_allowed?(special, board)
+      special_allowed?(special, board, for_check:)
     end
     valid_specials.map { |special| destination_from(special) }
   end
@@ -81,9 +82,9 @@ class Piece
 
   def to_s
     case color
-    when 'white'
+    when "white"
       color_white
-    when 'black'
+    when "black"
       color_black
     end
   end

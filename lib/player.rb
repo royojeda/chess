@@ -11,13 +11,13 @@ class Player
   end
 
   def choose_destination
-    puts 'Choose among the possible moves: '
+    puts "Choose among the possible moves: "
     give_input
   end
 
   private
 
   def give_input
-    gets.chomp.chars
+    gets.chomp.downcase.chars
   end
 end
