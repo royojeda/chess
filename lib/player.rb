@@ -18,6 +18,6 @@ class Player
   private
 
   def give_input
-    gets.chomp.chars
+    gets.chomp.downcase.chars
   end
 end

@@ -26,7 +26,7 @@ describe Player do
     end
 
     it "returns the user input as an array of chars" do
-      expected = %w[X Y Z d e f 4 5 6]
+      expected = %w[x y z d e f 4 5 6]
       expect(destination_player.choose_destination).to eq(expected)
     end
   end
