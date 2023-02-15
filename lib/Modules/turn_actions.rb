@@ -6,7 +6,7 @@ module TurnActions
   end
 
   def save?
-    start == 'save'.chars
+    start == "save".chars
   end
 
   def select_start

@@ -1,12 +1,12 @@
-require './lib/Pieces/piece'
-require './lib/Modules/movable'
+require "./lib/Pieces/piece"
+require "./lib/Modules/movable"
 
 class King < Piece
   include Movable
 
   def moves
     [upward_moves(range), downward_moves(range), leftward_moves(range), rightward_moves(range),
-     up_right_moves(range), up_left_moves(range), down_right_moves(range), down_left_moves(range)]
+      up_right_moves(range), up_left_moves(range), down_right_moves(range), down_left_moves(range)]
   end
 
   def specials
@@ -31,7 +31,7 @@ class King < Piece
   end
 
   def right_side_castle?(move)
-    move[0] == 'g'
+    move[0] == "g"
   end
 
   def locations_in_king_path(move)

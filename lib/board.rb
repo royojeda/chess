@@ -1,6 +1,6 @@
-require './lib/square'
-require './lib/Modules/board_predicates'
-require './lib/Modules/checks'
+require "./lib/square"
+require "./lib/Modules/board_predicates"
+require "./lib/Modules/checks"
 
 class Board
   include BoardPredicates
@@ -54,11 +54,11 @@ class Board
 
   def display
     squares.each do |square|
-      print "        #{square.rank}" if square.file == 'a'
+      print "        #{square.rank}" if square.file == "a"
       print square
-      puts if square.file == 'h'
+      puts if square.file == "h"
     end
-    puts '         A B C D E F G H'
+    puts "         A B C D E F G H"
   end
 
   private
@@ -78,11 +78,11 @@ class Board
   end
 
   def ranks
-    ('1'..'8').to_a.reverse
+    ("1".."8").to_a.reverse
   end
 
   def files
-    ('a'..'h').to_a
+    ("a".."h").to_a
   end
 
   def chance_not_passed(location)
@@ -100,15 +100,15 @@ class Board
   end
 
   def rook_start_file(move)
-    right_side_castle?(move) ? 'h' : 'a'
+    right_side_castle?(move) ? "h" : "a"
   end
 
   def rook_end_file(move)
-    right_side_castle?(move) ? 'f' : 'd'
+    right_side_castle?(move) ? "f" : "d"
   end
 
   def square_behind(square)
-    offset = square.owned_by?('white') ? -1 : 1
+    offset = square.owned_by?("white") ? -1 : 1
     location = [square.file, (square.rank.ord + offset).chr]
     square_at(location)
   end

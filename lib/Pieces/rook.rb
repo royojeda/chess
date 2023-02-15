@@ -1,5 +1,5 @@
-require './lib/Pieces/piece'
-require './lib/Modules/movable'
+require "./lib/Pieces/piece"
+require "./lib/Modules/movable"
 
 class Rook < Piece
   include Movable

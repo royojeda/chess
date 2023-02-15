@@ -1,11 +1,11 @@
-require './lib/Pieces/pawn'
-require './lib/Pieces/rook'
-require './lib/Pieces/knight'
-require './lib/Pieces/bishop'
-require './lib/Pieces/queen'
-require './lib/Pieces/king'
-require './lib/Modules/square_predicates'
-require './lib/Modules/square_colors'
+require "./lib/Pieces/pawn"
+require "./lib/Pieces/rook"
+require "./lib/Pieces/knight"
+require "./lib/Pieces/bishop"
+require "./lib/Pieces/queen"
+require "./lib/Pieces/king"
+require "./lib/Modules/square_predicates"
+require "./lib/Modules/square_colors"
 
 class Square
   include SquarePredicates
@@ -14,7 +14,7 @@ class Square
   attr_reader :rank, :file, :color
   attr_accessor :status, :occupant
 
-  def initialize(file:, rank:, status: '')
+  def initialize(file:, rank:, status: "")
     @file = file
     @rank = rank
     @status = status
@@ -31,7 +31,7 @@ class Square
   end
 
   def remove_occupant
-    self.occupant = ' '
+    self.occupant = " "
   end
 
   def update_occupant(source)
@@ -47,36 +47,36 @@ class Square
   private
 
   def last_rank
-    occupant.color == 'white' ? '8' : '1'
+    (occupant.color == "white") ? "8" : "1"
   end
 
   # rubocop:disable Metrics/MethodLength
   def determine_occupant
     case rank
-    when '1'
-      create_non_pawn('white')
-    when '2'
-      create_pawn('white')
-    when '7'
-      create_pawn('black')
-    when '8'
-      create_non_pawn('black')
+    when "1"
+      create_non_pawn("white")
+    when "2"
+      create_pawn("white")
+    when "7"
+      create_pawn("black")
+    when "8"
+      create_non_pawn("black")
     else
-      ' '
+      " "
     end
   end
 
   def create_non_pawn(color)
     case file
-    when 'a', 'h'
+    when "a", "h"
       Rook
-    when 'b', 'g'
+    when "b", "g"
       Knight
-    when 'c', 'f'
+    when "c", "f"
       Bishop
-    when 'd'
+    when "d"
       Queen
-    when 'e'
+    when "e"
       King
     end.new(color:, square: self)
   end

@@ -102,6 +102,6 @@ module BoardPredicates
   end
 
   def right_side_castle?(move)
-    file(move) == 'g'
+    file(move) == "g"
   end
 end

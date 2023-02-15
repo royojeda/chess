@@ -2,7 +2,7 @@ module Promotion
   private
 
   def promote
-    self.notice = 'Pawn promotion!'
+    self.notice = "Pawn promotion!"
     type = choose_replacement
     new_piece = type.new(color: current_player.color, square: board.square_at(move))
     board.place(new_piece, move)
@@ -33,6 +33,6 @@ module Promotion
   end
 
   def promotion_prompt
-    puts 'Please select a replacement piece: (1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight)'
+    puts "Please select a replacement piece: (1 - Queen, 2 - Rook, 3 - Bishop, 4 - Knight)"
   end
 end

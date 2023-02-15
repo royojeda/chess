@@ -38,7 +38,8 @@ class Piece
 
   private
 
-  def moves; end
+  def moves
+  end
 
   def special_moves(board, for_check: false)
     valid_specials = specials.select do |special|
@@ -81,9 +82,9 @@ class Piece
 
   def to_s
     case color
-    when 'white'
+    when "white"
       color_white
-    when 'black'
+    when "black"
       color_black
     end
   end

@@ -11,7 +11,7 @@ class Player
   end
 
   def choose_destination
-    puts 'Choose among the possible moves: '
+    puts "Choose among the possible moves: "
     give_input
   end
 

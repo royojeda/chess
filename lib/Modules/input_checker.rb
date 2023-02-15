@@ -3,14 +3,14 @@ module InputChecker
 
   def check_start_errors
     self.notice = check_valid_format(start) ||
-                  check_empty_square_at(start) ||
-                  check_own_piece_at(start) ||
-                  check_no_moves(start)
+      check_empty_square_at(start) ||
+      check_own_piece_at(start) ||
+      check_no_moves(start)
   end
 
   def check_move_errors
     self.notice = check_valid_format(move) ||
-                  check_valid_move(move)
+      check_valid_move(move)
   end
 
   def check_valid_move(input)

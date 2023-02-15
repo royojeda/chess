@@ -1,14 +1,14 @@
 module SquareColors
   def highlight_none
-    self.status = ''
+    self.status = ""
   end
 
   def highlight_blue
-    self.status = 'blue'
+    self.status = "blue"
   end
 
   def highlight_green
-    self.status = 'green'
+    self.status = "green"
   end
 
   def font_color
@@ -17,9 +17,9 @@ module SquareColors
 
   def background_color
     case status
-    when 'blue'
+    when "blue"
       background_blue
-    when 'green'
+    when "green"
       background_green
     else
       normal_color
@@ -28,9 +28,9 @@ module SquareColors
 
   def normal_color
     case color
-    when 'light'
+    when "light"
       background_light
-    when 'dark'
+    when "dark"
       background_dark
     end
   end
@@ -60,10 +60,10 @@ module SquareColors
   end
 
   def color_dark
-    'dark'
+    "dark"
   end
 
   def color_light
-    'light'
+    "light"
   end
 end

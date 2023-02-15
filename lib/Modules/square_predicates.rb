@@ -32,7 +32,7 @@ module SquarePredicates
   end
 
   def empty?
-    occupant == ' '
+    occupant == " "
   end
 
   def owned_by?(color)
