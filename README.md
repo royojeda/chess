@@ -106,11 +106,11 @@ Aside from those shown above, here are some other things that the application ca
   1.  A player tries to move an opponent's piece.
   1.  A player tries to move a piece to an invalid destination.
 
-      1. The piece's allowed moves don't include the destination.
+      1. The piece's characteristic moves don't include the destination.
 
       1. The destination contains an allied piece and/or, for pawns, an enemy piece.
 
-      1. Except for knights, the way to the destination is blocked by an enemy piece.
+      1. Except for knights, the way to the destination is blocked by another piece.
 
       1. For pawns, a normal diagonal capture move doesn't capture an enemy piece.
 
@@ -118,7 +118,7 @@ Aside from those shown above, here are some other things that the application ca
 
       1. For castling, the required conditions are not met.
 
-      1. Moving to the destination leaves the king in check.
+      1. Moving to the destination leaves the player's king in check.
 
 - [Checkmate](https://en.wikipedia.org/wiki/Checkmate)
 - [Stalemate](https://en.wikipedia.org/wiki/Stalemate)
